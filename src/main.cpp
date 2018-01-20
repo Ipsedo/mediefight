@@ -1,25 +1,25 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GL/glut.h>
-#include <GLFW>
+#include <GLFW/glfw3.h>
 #include "shader.h"
 
 int main(int argc, char** argv) {
     std::cout << "Hello, World!" << std::endl;
 
-    GLFWwindow* window
-            = glfwCreateWindow (width, height, "OpenGL Frame", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow (500, 500, "OpenGL Frame", NULL, NULL);
     if (!window) {
         fprintf (stderr, "ERROR: could not open window with GLFW3\n");
         glfwTerminate();
         return 1;
     }
+
     glfwMakeContextCurrent (window);
 
     // Set key callback function
-    glfwSetErrorCallback(error_callback);
+    /*glfwSetErrorCallback(error_callback);
     glfwSetKeyCallback(window, key_callback);
-    glfwSetCharCallback(window, char_callback);
+    glfwSetCharCallback(window, char_callback);*/
 
     // start GLEW extension handler
     glewExperimental = GL_TRUE;

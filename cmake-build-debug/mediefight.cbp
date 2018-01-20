@@ -48,6 +48,7 @@
 					<Add directory="/home/samuel/CLionProjects/mediefight/./src"/>
 					<Add directory="/home/samuel/CLionProjects/mediefight/./src/utils"/>
 					<Add directory="/home/samuel/CLionProjects/mediefight/./src/drawable"/>
+					<Add directory="/usr/include/libdrm"/>
 					<Add directory="/usr/include/c++/5"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
 					<Add directory="/usr/include/c++/5/backward"/>
@@ -75,6 +76,7 @@
 					<Add directory="/home/samuel/CLionProjects/mediefight/./src"/>
 					<Add directory="/home/samuel/CLionProjects/mediefight/./src/utils"/>
 					<Add directory="/home/samuel/CLionProjects/mediefight/./src/drawable"/>
+					<Add directory="/usr/include/libdrm"/>
 					<Add directory="/usr/include/c++/5"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
 					<Add directory="/usr/include/c++/5/backward"/>

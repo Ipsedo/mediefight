@@ -16,6 +16,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   ".././src"
   ".././src/utils"
   ".././src/drawable"
+  "/usr/include/libdrm"
   )
 
 # Targets to which this target links.
