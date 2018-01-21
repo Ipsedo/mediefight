@@ -4,6 +4,8 @@
 
 #include <glm.hpp>
 #include <string>
+#include <GL/glew.h>
+#include <vector>
 
 #ifndef MEDIEFIGHT_OBJVBO_H
 #define MEDIEFIGHT_OBJVBO_H
@@ -14,28 +16,36 @@ class ObjVBO {
 
 private:
     // Data sizes
-    const int POSITION_SIZE = 3;
-    const int NORMAL_SIZE = 3;
-    const int BYTES_PER_FLOAT = 4;
-    const int STRIDE = (POSITION_SIZE + NORMAL_SIZE) * BYTES_PER_FLOAT;
+    int POSITION_SIZE = 3;
+    int NORMAL_SIZE = 3;
+    int BYTES_PER_FLOAT = 4;
+    int STRIDE = (POSITION_SIZE + NORMAL_SIZE) * BYTES_PER_FLOAT;
 
     // GPU program handle
-    int mProgram;
-    int mPositionHandle;
-    int mNormalHandle;
-    int mColorHandle;
-    int mMVPMatrixHandle;
-    int mLightPosHandle;
-    int mMVMatrixHandle;
-    int mDistanceCoefHandle;
-    int mLightCoefHandle;
+    GLuint mProgram;
+    GLuint mPositionHandle;
+    GLuint mNormalHandle;
+    GLuint mColorHandle;
+    GLuint mMVPMatrixHandle;
+    GLuint mLightPosHandle;
+    GLuint mMVMatrixHandle;
+    GLuint mDistanceCoefHandle;
+    GLuint mLightCoefHandle;
 
     // Number of vertex -> needed for draw
     int nbVertex;
 
+    glm::vec4 color;
+
+    float distanceCoef;
+    float lightCoef;
+
+    GLuint packedDataBufferId;
+
     void init();
     void bind();
-    void bindBuffer();
+    void bindBuffer(std::vector<float> packedData);
+    std::vector<float> parseObj(std::string objFileName);
 
 public:
     ObjVBO(std::string objFileName);
