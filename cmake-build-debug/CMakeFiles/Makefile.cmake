@@ -25,7 +25,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/samuel/Programs/clion-2017.1/bin/cmake/share/cmake-3.7/Modules/Compiler/GNU-CXX.cmake"
   "/home/samuel/Programs/clion-2017.1/bin/cmake/share/cmake-3.7/Modules/Compiler/GNU.cmake"
   "/home/samuel/Programs/clion-2017.1/bin/cmake/share/cmake-3.7/Modules/FindGLEW.cmake"
-  "/home/samuel/Programs/clion-2017.1/bin/cmake/share/cmake-3.7/Modules/FindOpenGL.cmake"
   "/home/samuel/Programs/clion-2017.1/bin/cmake/share/cmake-3.7/Modules/FindPackageHandleStandardArgs.cmake"
   "/home/samuel/Programs/clion-2017.1/bin/cmake/share/cmake-3.7/Modules/FindPackageMessage.cmake"
   "/home/samuel/Programs/clion-2017.1/bin/cmake/share/cmake-3.7/Modules/FindPkgConfig.cmake"

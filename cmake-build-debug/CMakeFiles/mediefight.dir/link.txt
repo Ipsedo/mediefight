@@ -1,1 +1,1 @@
-/usr/bin/c++   -g   CMakeFiles/mediefight.dir/src/drawable/objvbo.cpp.o CMakeFiles/mediefight.dir/src/utils/shader.cpp.o CMakeFiles/mediefight.dir/src/main.cpp.o  -o mediefight /usr/lib/x86_64-linux-gnu/libGLEW.so /usr/lib/x86_64-linux-gnu/libGLU.so /usr/lib/x86_64-linux-gnu/libGL.so -lglfw 
+/usr/bin/c++   -g   CMakeFiles/mediefight.dir/src/drawable/objvbo.cpp.o CMakeFiles/mediefight.dir/src/utils/shader.cpp.o CMakeFiles/mediefight.dir/src/main.cpp.o  -o mediefight /usr/lib/x86_64-linux-gnu/libGLEW.so -lglfw 

@@ -3,6 +3,7 @@
 //
 
 #include <glm.hpp>
+#include <string>
 
 #ifndef MEDIEFIGHT_OBJVBO_H
 #define MEDIEFIGHT_OBJVBO_H
@@ -37,5 +38,6 @@ private:
     void bindBuffer();
 
 public:
+    ObjVBO(std::string objFileName);
     void draw(glm::mat4 mvp_Matrix, glm::mat4 mv_matrix, glm::vec3 light_pos);
 };

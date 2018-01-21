@@ -5,6 +5,10 @@
 #include "objvbo.h"
 #include "GL/glew.h"
 
+ObjVBO::ObjVBO(std::string objFileName) {
+
+}
+
 void ObjVBO::init() {
     mProgram = glCreateProgram();
 
