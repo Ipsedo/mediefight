@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -std=gnu++11
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/samuel/CLionProjects/mediefight/./glm/glm -I/home/samuel/CLionProjects/mediefight/./src -I/home/samuel/CLionProjects/mediefight/./src/utils -I/home/samuel/CLionProjects/mediefight/./src/drawable -I/usr/include/libdrm 
+CXX_INCLUDES = -I/home/samuel/CLionProjects/mediefight/./glm -I/home/samuel/CLionProjects/mediefight/./src -I/home/samuel/CLionProjects/mediefight/./src/utils -I/home/samuel/CLionProjects/mediefight/./src/drawable -I/usr/include/libdrm 
 

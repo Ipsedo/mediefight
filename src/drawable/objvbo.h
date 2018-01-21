@@ -2,7 +2,7 @@
 // Created by samuel on 19/01/18.
 //
 
-#include <glm.hpp>
+#include <glm/glm.hpp>
 #include <string>
 #include <GL/glew.h>
 #include <vector>

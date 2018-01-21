@@ -1,13 +1,13 @@
 //
 // Created by samuel on 19/01/18.
 //
-#include <ext.hpp>
 #include <fstream>
 #include <iostream>
 #include <vector>
 #include <sstream>
 #include "objvbo.h"
 #include "shader.h"
+#include <glm/gtc/type_ptr.hpp>
 
 ObjVBO::ObjVBO(std::string objFileName) {
     init();
@@ -75,8 +75,6 @@ std::vector<float> ObjVBO::parseObj(std::string objFileName) {
     std::vector<float> normal_list;
     std::vector<int> vertex_draw_order;
     std::vector<int> normal_draw_order;
-
-    std::cout << "yo" << std::endl;
 
     while (std::getline(in, str)) {
         //std::cout << str << std::endl;

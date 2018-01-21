@@ -44,7 +44,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/samuel/CLionProjects/mediefight/./glm/glm"/>
+					<Add directory="/home/samuel/CLionProjects/mediefight/./glm"/>
 					<Add directory="/home/samuel/CLionProjects/mediefight/./src"/>
 					<Add directory="/home/samuel/CLionProjects/mediefight/./src/utils"/>
 					<Add directory="/home/samuel/CLionProjects/mediefight/./src/drawable"/>
@@ -72,7 +72,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/samuel/CLionProjects/mediefight/./glm/glm"/>
+					<Add directory="/home/samuel/CLionProjects/mediefight/./glm"/>
 					<Add directory="/home/samuel/CLionProjects/mediefight/./src"/>
 					<Add directory="/home/samuel/CLionProjects/mediefight/./src/utils"/>
 					<Add directory="/home/samuel/CLionProjects/mediefight/./src/drawable"/>

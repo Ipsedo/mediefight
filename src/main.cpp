@@ -1,10 +1,13 @@
-#include <iostream>
 #include <GL/glew.h>
-#include <GL/glut.h>
 #include <GLFW/glfw3.h>
 #include <drawable/objvbo.h>
-#include <ext.hpp>
-#include "shader.h"
+#include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
+
+void error_callback(int error, const char* description)
+{
+    fputs(description, stderr);
+}
 
 int main(int argc, char** argv) {
     std::cout << "Hello, World!" << std::endl;
@@ -14,11 +17,11 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    glfwWindowHint(GLFW_SAMPLES, 4); // 4x antialiasing
+    /*glfwWindowHint(GLFW_SAMPLES, 4); // 4x antialiasing
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // On veut OpenGL 3.3
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // Pour rendre MacOS heureux ; ne devrait pas être nécessaire
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // Pour rendre MacOS heureux ; ne devrait pas être nécessaire
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);*/
 
     GLFWwindow* window; // (Dans le code source qui accompagne, cette variable est globale)
     window = glfwCreateWindow( 1024, 768, "Tutorial 01", NULL, NULL);
@@ -28,12 +31,12 @@ int main(int argc, char** argv) {
         return -1;
     }
     glfwMakeContextCurrent(window); // Initialise GLEW
+    glfwSetErrorCallback(error_callback);
     glewExperimental=true; // Nécessaire dans le profil de base
     if (glewInit() != GLEW_OK) {
         fprintf(stderr, "Failed to initialize GLEW\n");
         return -1;
     }
-    GLuint test = loadShader(GL_VERTEX_SHADER, "../res/shaders/diffuse_vs.glsl");
 
     ObjVBO* objVBO = new ObjVBO("../res/obj/icosahedron.obj");
 
@@ -46,7 +49,7 @@ int main(int argc, char** argv) {
     glm::mat4 modelMatrix = glm::mat4(1.0f);
 
     glViewport(0, 0, 1024, 768);
-    glClearColor(0., 0., 0., 1.);
+    //glClearColor(0., 0., 0., 1.);
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -58,9 +61,10 @@ int main(int argc, char** argv) {
         glm::mat4 mvMatrix = viewMatrix * modelMatrix;
         glm::mat4 mvpMatrix = projectionMatrix * mvMatrix;
         objVBO->draw(mvpMatrix, mvMatrix, glm::vec3(0.0, 0.0, -1.0));
+        glfwSwapBuffers (window);
     }
 
-
-    std::cout<<test<<" : valeur shader"<<std::endl;
-    return 0;
+    glfwDestroyWindow(window);
+    glfwTerminate();
+    exit(EXIT_SUCCESS);
 }
