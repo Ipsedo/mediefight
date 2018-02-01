@@ -48,6 +48,6 @@ private:
     std::vector<float> parseObj(std::string objFileName);
 
 public:
-    ObjVBO(std::string objFileName);
+    ObjVBO(std::string objFileName, glm::vec4 color);
     void draw(glm::mat4 mvp_Matrix, glm::mat4 mv_matrix, glm::vec3 light_pos);
 };

@@ -1,4 +1,4 @@
-#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
 
 #IncludeRegexScan: ^.*$
 
@@ -902,6 +902,10 @@ drawable/objvbo.h
 glm/gtc/matrix_transform.hpp
 -
 iostream
+-
+thread
+-
+chrono
 -
 
 /home/samuel/CLionProjects/mediefight/src/utils/shader.cpp

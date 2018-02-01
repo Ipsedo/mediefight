@@ -49,12 +49,12 @@
 					<Add directory="/home/samuel/CLionProjects/mediefight/./src/utils"/>
 					<Add directory="/home/samuel/CLionProjects/mediefight/./src/drawable"/>
 					<Add directory="/usr/include/libdrm"/>
-					<Add directory="/usr/include/c++/5"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
-					<Add directory="/usr/include/c++/5/backward"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
@@ -77,12 +77,12 @@
 					<Add directory="/home/samuel/CLionProjects/mediefight/./src/utils"/>
 					<Add directory="/home/samuel/CLionProjects/mediefight/./src/drawable"/>
 					<Add directory="/usr/include/libdrm"/>
-					<Add directory="/usr/include/c++/5"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
-					<Add directory="/usr/include/c++/5/backward"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/include/c++/4.9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/4.9"/>
+					<Add directory="/usr/include/c++/4.9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
