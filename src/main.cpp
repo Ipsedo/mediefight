@@ -16,7 +16,6 @@ void error_callback(int error, const char* description)
 }
 
 int main(int argc, char** argv) {
-    std::cout << "Hello, World!" << std::endl;
 
     if (!glfwInit()) {
         fprintf(stderr, "Failed GLFW initialization\n");
@@ -24,29 +23,29 @@ int main(int argc, char** argv) {
     }
 
     glfwDefaultWindowHints();
-    glfwWindowHint(GLFW_SAMPLES, 4); // 4x antialiasing
-    GLFWwindow* window; // (Dans le code source qui accompagne, cette variable est globale)
+    glfwWindowHint(GLFW_SAMPLES, 4);
+    GLFWwindow* window;
     window = glfwCreateWindow( 1024, 768, "Tutorial 01", NULL, NULL);
     if(!window) {
         fprintf( stderr, "Failed to open GLFW window.\n" );
         glfwTerminate();
         return -1;
     }
-    glfwMakeContextCurrent(window); // Initialise GLEW
+    glfwMakeContextCurrent(window);
     glfwSetErrorCallback(error_callback);
-    glewExperimental = GL_TRUE; // Nécessaire dans le profil de base
+    glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
         fprintf(stderr, "Failed to initialize GLEW\n");
         return -1;
     }
 
-    ObjVBO* objVBO = new ObjVBO("../res/obj/icosahedron.obj", glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+    ObjVBO* objVBO = new ObjVBO("../res/obj/alien.obj", glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 
     glm::mat4 projectionMatrix = glm::frustum(-1.f , 1.f , -768.f / 1024.f , 768.f / 1024.f , 1.0f, 50.0f);
     glm::mat4 viewMatrix = glm::lookAt(
-            glm::vec3(0., 0., -1.), // Camera  in World Space
-            glm::vec3(0., 0., 1.), // and looks at look at
-            glm::vec3(0,1,0)  // Head is up (set to 0,0,1)
+            glm::vec3(0., 0., -1.),
+            glm::vec3(0., 0., 1.),
+            glm::vec3(0,1,0)
     );
 
     glViewport(0, 0, 1024, 768);
@@ -59,7 +58,7 @@ int main(int argc, char** argv) {
 
     float angle = 0.0f;
     while (!glfwWindowShouldClose (window)) {
-        glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), angle+=1e-1, glm::vec3(0.2, -0.5, 0.3));
+        glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), angle+=1e-1, glm::vec3(0.f, 1.f, 0.f));
         glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 2.f));
         glm::mat4 modelMatrix = translate * rotation;
         glm::mat4 mvMatrix =  viewMatrix * modelMatrix;
