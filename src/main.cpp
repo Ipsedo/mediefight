@@ -8,8 +8,6 @@
 
 #define GLM_FORCE_RADIANS
 
-using namespace glm;
-
 void error_callback(int error, const char* description)
 {
     fputs(description, stderr);
@@ -39,7 +37,7 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    ObjVBO* objVBO = new ObjVBO("../res/obj/alien.obj", glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+    ObjVBO* objVBO = new ObjVBO("../res/models/super_ico.stl", glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 
     glm::mat4 projectionMatrix = glm::frustum(-1.f , 1.f , -768.f / 1024.f , 768.f / 1024.f , 1.0f, 50.0f);
     glm::mat4 viewMatrix = glm::lookAt(
@@ -59,7 +57,7 @@ int main(int argc, char** argv) {
     float angle = 0.0f;
     while (!glfwWindowShouldClose (window)) {
         glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), angle+=1e-2, glm::vec3(0.f, 1.f, 0.f));
-        glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 2.f));
+        glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 5.f));
         glm::mat4 modelMatrix = translate * rotation;
         glm::mat4 mvMatrix =  viewMatrix * modelMatrix;
         glm::mat4 mvpMatrix = projectionMatrix * mvMatrix;

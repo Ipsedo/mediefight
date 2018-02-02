@@ -9,10 +9,28 @@
 #include "shader.h"
 #include <glm/gtc/type_ptr.hpp>
 
+std::vector<std::string> split(const std::string &s, char delim) {
+    std::stringstream ss(s);
+    std::string item;
+    std::vector<std::string> elems;
+    while (std::getline(ss, item, delim)) {
+        //elems.push_back(item);
+        elems.push_back(std::move(item)); // if C++11 (based on comment from @mchiasson)
+    }
+    return elems;
+}
+
 ObjVBO::ObjVBO(std::string objFileName, glm::vec4 color) {
     init();
     bind();
-    bindBuffer(parseObj(objFileName));
+    std::vector<std::string> dot_split = split(objFileName, '.');
+    std::string type = dot_split[dot_split.size() - 1];
+    if (type == "obj")
+        bindBuffer(parseObj(objFileName));
+    else if (type == "stl")
+        bindBuffer(parseStl((objFileName)));
+    else
+        perror("Unsuported file name !");
 
     lightCoef = 1;
     distanceCoef = 0;
@@ -50,24 +68,13 @@ void ObjVBO::bindBuffer(std::vector<float> packedData) {
     packedData.clear();
 }
 
-std::vector<std::string> split(const std::string &s, char delim) {
-    std::stringstream ss(s);
-    std::string item;
-    std::vector<std::string> elems;
-    while (std::getline(ss, item, delim)) {
-        elems.push_back(item);
-        // elems.push_back(std::move(item)); // if C++11 (based on comment from @mchiasson)
-    }
-    return elems;
-}
-
 std::vector<float> ObjVBO::parseObj(std::string objFileName) {
     nbVertex = 0;
 
     std::ifstream in(objFileName);
 
     if (!in) {
-        std::cout << "Error during opening obj file" << std::endl;
+        std::cout << "Error during opening models file" << std::endl;
         exit(0);
     }
     std::string str;
@@ -130,6 +137,62 @@ std::vector<float> ObjVBO::parseObj(std::string objFileName) {
     normal_draw_order.clear();
 
     return packedData;
+}
+
+float parseFloat(std::ifstream *file) {
+    char tmp[4];
+    (*file).read(tmp, 4);
+    float res;
+    memcpy(&res, tmp, sizeof(char) * 4);
+    return res;
+}
+
+std::vector<float> ObjVBO::parseStl(std::string stlFileName) {
+    std::vector<float> res;
+
+    std::ifstream file(stlFileName);
+
+    if (!file) {
+        std::cout << "Error during opening models file" << std::endl;
+        exit(0);
+    }
+
+    char header[80] = "";
+    char N[4];
+
+    file.read(header, 80);
+
+    file.read(N, 4);
+    unsigned int nb_triangles = 0;
+    /**
+     * Little Endian supposed !
+     */
+    for (int i = 3; i >= 0; i--) {
+        nb_triangles = (nb_triangles << 8) + N[i];
+    }
+
+    for (unsigned int i = 0; i < nb_triangles; i++) {
+        float n[3] = { parseFloat(&file), parseFloat(&file), parseFloat(&file) };
+        for (int j = 0; j < 3; j++) {
+            res.push_back(parseFloat(&file));
+            res.push_back(parseFloat(&file));
+            res.push_back(parseFloat(&file));
+            res.push_back(n[0]);
+            res.push_back(n[1]);
+            res.push_back(n[2]);
+        }
+
+        char attribute[2];
+        file.read(attribute, 2);
+    }
+
+    float max = -FLT_MAX;
+    for (int i = 0; i < res.size(); i++) {
+        max = res[i] > max ? res[i] : max;
+    }
+
+    nbVertex = nb_triangles * 3;
+    return res;
 }
 
 void ObjVBO::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::vec3 light_pos) {
