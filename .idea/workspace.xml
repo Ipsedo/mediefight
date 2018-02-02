@@ -12,19 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a69dba49-b6b4-4e95-8469-21c5441cc817" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/shaders/specular_fs.glsl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/shaders/specular_vs.glsl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/drawable/objmtlvbo.cpp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/drawable/objmtlvbo.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/utils/res.cpp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/utils/res.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/models/whale.stl" afterPath="$PROJECT_DIR$/res/models/whale.stl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/drawable/modelvbo.cpp" afterPath="$PROJECT_DIR$/src/drawable/modelvbo.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/drawable/modelvbo.h" afterPath="$PROJECT_DIR$/src/drawable/modelvbo.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.cpp" afterPath="$PROJECT_DIR$/src/main.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/shader.cpp" afterPath="$PROJECT_DIR$/src/utils/shader.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,12 +26,14 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="modelvbo.cpp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="modelvbo.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/drawable/modelvbo.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3172">
-              <caret line="8" column="25" lean-forward="true" selection-start-line="8" selection-start-column="25" selection-end-line="9" selection-end-column="31" />
-              <folding />
+            <state relative-caret-position="272">
+              <caret line="47" column="0" lean-forward="true" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+              <folding>
+                <element signature="e#40#58#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -57,7 +48,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="shader.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="shader.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/utils/shader.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="378">
@@ -72,8 +63,8 @@
       <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="13" column="53" lean-forward="true" selection-start-line="13" selection-start-column="53" selection-end-line="13" selection-end-column="53" />
+            <state relative-caret-position="198">
+              <caret line="11" column="71" lean-forward="true" selection-start-line="11" selection-start-column="71" selection-end-line="11" selection-end-column="71" />
               <folding />
             </state>
           </provider>
@@ -150,12 +141,12 @@
         <option value="$PROJECT_DIR$/src/utils/res.cpp" />
         <option value="$PROJECT_DIR$/res/shaders/specular_vs.glsl" />
         <option value="$PROJECT_DIR$/res/shaders/specular_fs.glsl" />
-        <option value="$PROJECT_DIR$/src/drawable/modelvbo.cpp" />
         <option value="$PROJECT_DIR$/src/drawable/objmtlvbo.h" />
         <option value="$PROJECT_DIR$/src/drawable/objmtlvbo.cpp" />
         <option value="$PROJECT_DIR$/src/main.cpp" />
         <option value="$PROJECT_DIR$/src/drawable/modelvbo.h" />
         <option value="$PROJECT_DIR$/src/utils/shader.cpp" />
+        <option value="$PROJECT_DIR$/src/drawable/modelvbo.cpp" />
       </list>
     </option>
   </component>
@@ -516,7 +507,7 @@
       <workItem from="1517555823429" duration="439000" />
       <workItem from="1517576872510" duration="458000" />
       <workItem from="1517577400630" duration="6037000" />
-      <workItem from="1517584854860" duration="7978000" />
+      <workItem from="1517584854860" duration="8418000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1516466321132</created>
@@ -567,11 +558,18 @@
       <option name="project" value="LOCAL" />
       <updated>1517587677421</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="faire obj mtl model">
+      <created>1517594317644</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1517594317644</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35916000" />
+    <option name="totallyTimeSpent" value="36356000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1985" y="-4" width="1855" height="1084" extended-state="6" />
@@ -610,7 +608,8 @@
     <MESSAGE value="rendu obj ok" />
     <MESSAGE value="add alien" />
     <MESSAGE value="rename objvbo to modelvbo" />
-    <option name="LAST_COMMIT_MESSAGE" value="rename objvbo to modelvbo" />
+    <MESSAGE value="faire obj mtl model" />
+    <option name="LAST_COMMIT_MESSAGE" value="faire obj mtl model" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -621,7 +620,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3240">
           <caret line="180" column="32" lean-forward="false" selection-start-line="180" selection-start-column="32" selection-end-line="180" selection-end-column="32" />
-          <folding />
+          <folding>
+            <element signature="e#40#58#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -702,7 +703,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2628">
           <caret line="146" column="0" lean-forward="true" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#40#58#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -747,7 +750,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2610">
           <caret line="145" column="38" lean-forward="false" selection-start-line="145" selection-start-column="38" selection-end-line="145" selection-end-column="38" />
-          <folding />
+          <folding>
+            <element signature="e#40#58#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -772,7 +777,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2610">
           <caret line="145" column="38" lean-forward="true" selection-start-line="145" selection-start-column="38" selection-end-line="145" selection-end-column="38" />
-          <folding />
+          <folding>
+            <element signature="e#40#58#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -797,7 +804,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2394">
           <caret line="133" column="83" lean-forward="false" selection-start-line="133" selection-start-column="83" selection-end-line="133" selection-end-column="83" />
-          <folding />
+          <folding>
+            <element signature="e#40#58#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -822,7 +831,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2340">
           <caret line="130" column="30" lean-forward="false" selection-start-line="130" selection-start-column="30" selection-end-line="130" selection-end-column="30" />
-          <folding />
+          <folding>
+            <element signature="e#40#58#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -963,14 +974,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/drawable/modelvbo.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3172">
-          <caret line="8" column="25" lean-forward="true" selection-start-line="8" selection-start-column="25" selection-end-line="9" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/drawable/objmtlvbo.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="446">
@@ -1001,14 +1004,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="13" column="53" lean-forward="true" selection-start-line="13" selection-start-column="53" selection-end-line="13" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/drawable/modelvbo.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-142">
@@ -1025,6 +1020,24 @@
           <caret line="21" column="30" lean-forward="true" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
           <folding>
             <element signature="e#672#689#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="71" lean-forward="true" selection-start-line="11" selection-start-column="71" selection-end-line="11" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/drawable/modelvbo.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="47" column="0" lean-forward="true" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+          <folding>
+            <element signature="e#40#58#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -47,14 +47,14 @@ void ModelVBO::init() {
 }
 
 void ModelVBO::bind() {
-    mMVPMatrixHandle = glGetUniformLocation(mProgram, "u_MVPMatrix");
-    mMVMatrixHandle = glGetUniformLocation(mProgram, "u_MVMatrix");
-    mPositionHandle = glGetAttribLocation(mProgram, "a_Position");
-    mColorHandle = glGetUniformLocation(mProgram, "u_Color");
-    mLightPosHandle = glGetUniformLocation(mProgram, "u_LightPos");
-    mDistanceCoefHandle = glGetUniformLocation(mProgram, "u_distance_coef");
-    mLightCoefHandle = glGetUniformLocation(mProgram, "u_light_coef");
-    mNormalHandle = glGetAttribLocation(mProgram, "a_Normal");
+    mMVPMatrixHandle = (GLuint) glGetUniformLocation(mProgram, "u_MVPMatrix");
+    mMVMatrixHandle = (GLuint) glGetUniformLocation(mProgram, "u_MVMatrix");
+    mPositionHandle = (GLuint) glGetAttribLocation(mProgram, "a_Position");
+    mColorHandle = (GLuint) glGetUniformLocation(mProgram, "u_Color");
+    mLightPosHandle = (GLuint) glGetUniformLocation(mProgram, "u_LightPos");
+    mDistanceCoefHandle = (GLuint) glGetUniformLocation(mProgram, "u_distance_coef");
+    mLightCoefHandle = (GLuint) glGetUniformLocation(mProgram, "u_light_coef");
+    mNormalHandle = (GLuint) glGetAttribLocation(mProgram, "a_Normal");
 }
 
 void ModelVBO::bindBuffer(std::vector<float> packedData) {
