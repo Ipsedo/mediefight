@@ -164,7 +164,7 @@ std::vector<float> ObjVBO::parseStl(std::string stlFileName) {
 
     file.read(N, 4);
     unsigned int nb_triangles = 0;
-    /**
+    /*
      * Little Endian supposed !
      */
     for (int i = 3; i >= 0; i--) {
@@ -184,11 +184,6 @@ std::vector<float> ObjVBO::parseStl(std::string stlFileName) {
 
         char attribute[2];
         file.read(attribute, 2);
-    }
-
-    float max = -FLT_MAX;
-    for (int i = 0; i < res.size(); i++) {
-        max = res[i] > max ? res[i] : max;
     }
 
     nbVertex = nb_triangles * 3;
