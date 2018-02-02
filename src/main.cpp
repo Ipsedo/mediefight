@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
 
     float angle = 0.0f;
     while (!glfwWindowShouldClose (window)) {
-        glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), angle+=1e-1, glm::vec3(0.f, 1.f, 0.f));
+        glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), angle+=1e-2, glm::vec3(0.f, 1.f, 0.f));
         glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 2.f));
         glm::mat4 modelMatrix = translate * rotation;
         glm::mat4 mvMatrix =  viewMatrix * modelMatrix;
@@ -67,7 +67,7 @@ int main(int argc, char** argv) {
         objVBO->draw(mvpMatrix, mvMatrix, glm::vec3(0.0, 0.0, 0.0));
         glfwSwapBuffers (window);
         glfwPollEvents();
-        std::this_thread::sleep_for(std::chrono::milliseconds(60));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
     }
 
     glfwDestroyWindow(window);

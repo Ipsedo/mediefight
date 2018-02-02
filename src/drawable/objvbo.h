@@ -46,6 +46,7 @@ private:
     void bind();
     void bindBuffer(std::vector<float> packedData);
     std::vector<float> parseObj(std::string objFileName);
+    //std::vector<float> parseStl(std::string stlFileName);
 
 public:
     ObjVBO(std::string objFileName, glm::vec4 color);
