@@ -9,13 +9,14 @@
 #include "shader.h"
 #include <glm/gtc/type_ptr.hpp>
 
-ObjVBO::ObjVBO(std::string objFileName) {
+ObjVBO::ObjVBO(std::string objFileName, glm::vec4 color) {
     init();
     bind();
     bindBuffer(parseObj(objFileName));
 
     lightCoef = 1;
     distanceCoef = 0;
+    this->color = color;
 }
 
 void ObjVBO::init() {
@@ -163,4 +164,5 @@ void ObjVBO::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::vec3 light_pos
     glDisableVertexAttribArray(mPositionHandle);
     glDisableVertexAttribArray(mColorHandle);
     glDisableVertexAttribArray(mNormalHandle);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
