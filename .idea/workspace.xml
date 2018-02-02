@@ -418,7 +418,7 @@
       <updated>1516465325262</updated>
       <workItem from="1516465328278" duration="2551000" />
       <workItem from="1516544991339" duration="8302000" />
-      <workItem from="1516555250812" duration="2924000" />
+      <workItem from="1516555250812" duration="2951000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1516466321132</created>
@@ -448,15 +448,21 @@
       <option name="project" value="LOCAL" />
       <updated>1516563405810</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="faire rendu obj">
+      <created>1516563796585</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1516563796585</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13777000" />
+    <option name="totallyTimeSpent" value="13804000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1985" y="-4" width="1855" height="1084" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25538972" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
