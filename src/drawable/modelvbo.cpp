@@ -6,7 +6,7 @@
 #include <vector>
 #include <sstream>
 #include "modelvbo.h"
-#include "shader.h"
+#include "utils/shader.h"
 #include <glm/gtc/type_ptr.hpp>
 
 std::vector<std::string> split(const std::string &s, char delim) {
@@ -47,14 +47,14 @@ void ModelVBO::init() {
 }
 
 void ModelVBO::bind() {
-    mMVPMatrixHandle = (GLuint) glGetUniformLocation(mProgram, "u_MVPMatrix");
-    mMVMatrixHandle = (GLuint) glGetUniformLocation(mProgram, "u_MVMatrix");
-    mPositionHandle = (GLuint) glGetAttribLocation(mProgram, "a_Position");
-    mColorHandle = (GLuint) glGetUniformLocation(mProgram, "u_Color");
-    mLightPosHandle = (GLuint) glGetUniformLocation(mProgram, "u_LightPos");
-    mDistanceCoefHandle = (GLuint) glGetUniformLocation(mProgram, "u_distance_coef");
-    mLightCoefHandle = (GLuint) glGetUniformLocation(mProgram, "u_light_coef");
-    mNormalHandle = (GLuint) glGetAttribLocation(mProgram, "a_Normal");
+    mMVPMatrixHandle = glGetUniformLocation(mProgram, "u_MVPMatrix");
+    mMVMatrixHandle = glGetUniformLocation(mProgram, "u_MVMatrix");
+    mPositionHandle = glGetAttribLocation(mProgram, "a_Position");
+    mColorHandle = glGetUniformLocation(mProgram, "u_Color");
+    mLightPosHandle = glGetUniformLocation(mProgram, "u_LightPos");
+    mDistanceCoefHandle = glGetUniformLocation(mProgram, "u_distance_coef");
+    mLightCoefHandle = glGetUniformLocation(mProgram, "u_light_coef");
+    mNormalHandle = glGetAttribLocation(mProgram, "a_Normal");
 }
 
 void ModelVBO::bindBuffer(std::vector<float> packedData) {
@@ -185,6 +185,8 @@ std::vector<float> ModelVBO::parseStl(std::string stlFileName) {
         char attribute[2];
         file.read(attribute, 2);
     }
+
+    std::cout << res.size() << " " << res.max_size() << std::endl;
 
     nbVertex = nb_triangles * 3;
     return res;

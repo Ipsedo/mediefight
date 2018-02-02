@@ -22,7 +22,7 @@ unsigned long getFileLength(std::ifstream& file)
     if(!file.good()) return 0;
 
     file.seekg(0,std::ios::end);
-    unsigned long len = file.tellg();
+    unsigned long len = (unsigned long) file.tellg();
     file.seekg(std::ios::beg);
 
     return len;
@@ -51,7 +51,7 @@ GLuint loadShader(GLenum type, std::string filename) {
 
     unsigned int i=0;
     while (file.good()) {
-        shaderSource[i] = file.get();
+        shaderSource[i] = (GLchar) file.get();
         if (!file.eof())
             i++;
     }

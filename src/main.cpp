@@ -2,7 +2,6 @@
 #include <GLFW/glfw3.h>
 #include <drawable/modelvbo.h>
 #include <glm/gtc/matrix_transform.hpp>
-#include <iostream>
 #include <thread>
 #include <chrono>
 

@@ -4,13 +4,11 @@
 
 #include <glm/glm.hpp>
 #include <string>
-#include <GL/glew.h>
 #include <vector>
+#include <GL/glew.h>
 
 #ifndef MEDIEFIGHT_OBJVBO_H
 #define MEDIEFIGHT_OBJVBO_H
-
-#endif //MEDIEFIGHT_OBJVBO_H
 
 /**
  * One color object with VBO
@@ -20,10 +18,10 @@ class ModelVBO {
 
 private:
     // Data sizes
-    int POSITION_SIZE = 3;
-    int NORMAL_SIZE = 3;
-    int BYTES_PER_FLOAT = 4;
-    int STRIDE = (POSITION_SIZE + NORMAL_SIZE) * BYTES_PER_FLOAT;
+    const int POSITION_SIZE = 3;
+    const int NORMAL_SIZE = 3;
+    const int BYTES_PER_FLOAT = 4;
+    const int STRIDE = (POSITION_SIZE + NORMAL_SIZE) * BYTES_PER_FLOAT;
 
     // GPU program handle
     GLuint mProgram;
@@ -56,3 +54,5 @@ public:
     ModelVBO(std::string model_file_name, glm::vec4 color);
     void draw(glm::mat4 mvp_Matrix, glm::mat4 mv_matrix, glm::vec3 light_pos);
 };
+
+#endif //MEDIEFIGHT_OBJVBO_H
