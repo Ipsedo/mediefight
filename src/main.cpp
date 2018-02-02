@@ -1,6 +1,6 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <drawable/objvbo.h>
+#include <drawable/modelvbo.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 #include <thread>
@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    ObjVBO* objVBO = new ObjVBO("../res/models/whale.obj", glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+    ModelVBO* objVBO = new ModelVBO("../res/models/whale.obj", glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 
     glm::mat4 projectionMatrix = glm::frustum(-1.f , 1.f , -768.f / 1024.f , 768.f / 1024.f , 1.0f, 50.0f);
     glm::mat4 viewMatrix = glm::lookAt(

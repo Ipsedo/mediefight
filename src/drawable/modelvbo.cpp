@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
-#include "objvbo.h"
+#include "modelvbo.h"
 #include "shader.h"
 #include <glm/gtc/type_ptr.hpp>
 
@@ -20,15 +20,15 @@ std::vector<std::string> split(const std::string &s, char delim) {
     return elems;
 }
 
-ObjVBO::ObjVBO(std::string objFileName, glm::vec4 color) {
+ModelVBO::ModelVBO(std::string model_file_name, glm::vec4 color) {
     init();
     bind();
-    std::vector<std::string> dot_split = split(objFileName, '.');
+    std::vector<std::string> dot_split = split(model_file_name, '.');
     std::string type = dot_split[dot_split.size() - 1];
     if (type == "obj")
-        bindBuffer(parseObj(objFileName));
+        bindBuffer(parseObj(model_file_name));
     else if (type == "stl")
-        bindBuffer(parseStl((objFileName)));
+        bindBuffer(parseStl((model_file_name)));
     else
         perror("Unsuported file name !");
 
@@ -37,7 +37,7 @@ ObjVBO::ObjVBO(std::string objFileName, glm::vec4 color) {
     this->color = color;
 }
 
-void ObjVBO::init() {
+void ModelVBO::init() {
     mProgram = glCreateProgram();
     GLuint vertexShader = loadShader(GL_VERTEX_SHADER, "../res/shaders/diffuse_vs.glsl");
     GLuint fragmentShader = loadShader(GL_FRAGMENT_SHADER, "../res/shaders/diffuse_fs.glsl");
@@ -46,7 +46,7 @@ void ObjVBO::init() {
     glLinkProgram(mProgram);
 }
 
-void ObjVBO::bind() {
+void ModelVBO::bind() {
     mMVPMatrixHandle = (GLuint) glGetUniformLocation(mProgram, "u_MVPMatrix");
     mMVMatrixHandle = (GLuint) glGetUniformLocation(mProgram, "u_MVMatrix");
     mPositionHandle = (GLuint) glGetAttribLocation(mProgram, "a_Position");
@@ -57,7 +57,7 @@ void ObjVBO::bind() {
     mNormalHandle = (GLuint) glGetAttribLocation(mProgram, "a_Normal");
 }
 
-void ObjVBO::bindBuffer(std::vector<float> packedData) {
+void ModelVBO::bindBuffer(std::vector<float> packedData) {
     glGenBuffers(1, &packedDataBufferId);
 
     glBindBuffer(GL_ARRAY_BUFFER, packedDataBufferId);
@@ -68,7 +68,7 @@ void ObjVBO::bindBuffer(std::vector<float> packedData) {
     packedData.clear();
 }
 
-std::vector<float> ObjVBO::parseObj(std::string objFileName) {
+std::vector<float> ModelVBO::parseObj(std::string objFileName) {
     nbVertex = 0;
 
     std::ifstream in(objFileName);
@@ -147,7 +147,7 @@ float parseFloat(std::ifstream *file) {
     return res;
 }
 
-std::vector<float> ObjVBO::parseStl(std::string stlFileName) {
+std::vector<float> ModelVBO::parseStl(std::string stlFileName) {
     std::vector<float> res;
 
     std::ifstream file(stlFileName);
@@ -190,7 +190,7 @@ std::vector<float> ObjVBO::parseStl(std::string stlFileName) {
     return res;
 }
 
-void ObjVBO::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::vec3 light_pos) {
+void ModelVBO::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::vec3 light_pos) {
     glUseProgram(mProgram);
 
     glBindBuffer(GL_ARRAY_BUFFER, packedDataBufferId);
