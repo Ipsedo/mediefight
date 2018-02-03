@@ -3,14 +3,15 @@
 //
 
 #include <GL/glew.h>
-#include <utils/shader.h>
+#include <utils/graphics/shader.h>
 #include <glm/gtc/type_ptr.hpp>
+#include <utils/res.h>
 #include "objmtlvbo.h"
 
 void ObjMtlVBO::init() {
     mProgram = glCreateProgram();
-    GLuint vertexShader = loadShader(GL_VERTEX_SHADER, "../res/shaders/specular_vs.glsl");
-    GLuint fragmentShader = loadShader(GL_FRAGMENT_SHADER, "../res/shaders/specular_fs.glsl");
+    GLuint vertexShader = loadShader(GL_VERTEX_SHADER, getResFolder() + "/shaders/specular_vs.glsl");
+    GLuint fragmentShader = loadShader(GL_FRAGMENT_SHADER, getResFolder() + "/shaders/specular_fs.glsl");
     glAttachShader(mProgram, vertexShader);
     glAttachShader(mProgram, fragmentShader);
     glLinkProgram(mProgram);

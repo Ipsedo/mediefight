@@ -6,18 +6,27 @@
 #include <vector>
 #include <sstream>
 #include "modelvbo.h"
-#include "utils/shader.h"
+#include "utils/graphics/shader.h"
 #include <glm/gtc/type_ptr.hpp>
+#include <utils/string_utils.h>
+#include <utils/res.h>
 
-std::vector<std::string> split(const std::string &s, char delim) {
-    std::stringstream ss(s);
-    std::string item;
-    std::vector<std::string> elems;
-    while (std::getline(ss, item, delim)) {
-        //elems.push_back(item);
-        elems.push_back(std::move(item)); // if C++11 (based on comment from @mchiasson)
-    }
-    return elems;
+ModelVBO::ModelVBO(std::string model_file_name) {
+    init();
+    bind();
+    std::vector<std::string> dot_split = split(model_file_name, '.');
+    std::string type = dot_split[dot_split.size() - 1];
+    if (type == "obj")
+        bindBuffer(parseObj(model_file_name));
+    else if (type == "stl")
+        bindBuffer(parseStl((model_file_name)));
+    else
+        perror("Unsuported file name !");
+
+    lightCoef = 1;
+    distanceCoef = 0;
+    this->color = glm::vec4(std::rand(), std::rand(), std::rand(), 1.f);
+    this->color /= RAND_MAX;
 }
 
 ModelVBO::ModelVBO(std::string model_file_name, glm::vec4 color) {
@@ -39,8 +48,8 @@ ModelVBO::ModelVBO(std::string model_file_name, glm::vec4 color) {
 
 void ModelVBO::init() {
     mProgram = glCreateProgram();
-    GLuint vertexShader = loadShader(GL_VERTEX_SHADER, "../res/shaders/diffuse_vs.glsl");
-    GLuint fragmentShader = loadShader(GL_FRAGMENT_SHADER, "../res/shaders/diffuse_fs.glsl");
+    GLuint vertexShader = loadShader(GL_VERTEX_SHADER, getResFolder() + "/shaders/diffuse_vs.glsl");
+    GLuint fragmentShader = loadShader(GL_FRAGMENT_SHADER, getResFolder() + "/shaders/diffuse_fs.glsl");
     glAttachShader(mProgram, vertexShader);
     glAttachShader(mProgram, fragmentShader);
     glLinkProgram(mProgram);
@@ -87,7 +96,7 @@ std::vector<float> ModelVBO::parseObj(std::string objFileName) {
     while (std::getline(in, str)) {
         //std::cout << str << std::endl;
         std::vector<std::string> splitted_line = split(str, ' ');
-        if(splitted_line.size() != 0) {
+        if(!splitted_line.empty()) {
             if (splitted_line[0] == "vn") {
                 normal_list.push_back(std::stof(splitted_line[1]));
                 normal_list.push_back(std::stof(splitted_line[2]));

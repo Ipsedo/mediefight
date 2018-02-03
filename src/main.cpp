@@ -3,9 +3,7 @@
 #include <drawable/modelvbo.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <thread>
-#include <chrono>
-
-#define GLM_FORCE_RADIANS
+#include <utils/res.h>
 
 void error_callback(int error, const char* description)
 {
@@ -13,6 +11,10 @@ void error_callback(int error, const char* description)
 }
 
 int main(int argc, char** argv) {
+    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double> time_span = t1.time_since_epoch();
+    std::srand((unsigned int)time_span.count());
 
     if (!glfwInit()) {
         fprintf(stderr, "Failed GLFW initialization\n");
@@ -36,7 +38,7 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    ModelVBO* objVBO = new ModelVBO("../res/models/whale.obj", glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+    ModelVBO objVBO(getResFolder() + "/models/whale.obj");
 
     glm::mat4 projectionMatrix = glm::frustum(-1.f , 1.f , -768.f / 1024.f , 768.f / 1024.f , 1.0f, 50.0f);
     glm::mat4 viewMatrix = glm::lookAt(
@@ -61,7 +63,7 @@ int main(int argc, char** argv) {
         glm::mat4 mvMatrix =  viewMatrix * modelMatrix;
         glm::mat4 mvpMatrix = projectionMatrix * mvMatrix;
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        objVBO->draw(mvpMatrix, mvMatrix, glm::vec3(0.0, 0.0, 0.0));
+        objVBO.draw(mvpMatrix, mvMatrix, glm::vec3(0.0, 0.0, 0.0));
         glfwSwapBuffers (window);
         glfwPollEvents();
         std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
