@@ -1,0 +1,4 @@
+cmake-build-*/
+.idea/*.iws
+.idea/workspace.xml
+.idea/tasks.xml

@@ -1,4 +1,0 @@
-/home/samuel/Programs/clion-2017.3.1/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/usr/bin/gcc-4.9 -DCMAKE_CXX_COMPILER=/usr/bin/g++-4.9 -G "CodeBlocks - Unix Makefiles" /home/samuel/CLionProjects/mediefight
--- Configuring done
--- Generating done
--- Build files have been written to: /home/samuel/CLionProjects/mediefight/cmake-build-debug
