@@ -1,3 +1,0 @@
-/home/samuel/CLionProjects/mediefight/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/samuel/CLionProjects/mediefight/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/samuel/CLionProjects/mediefight/cmake-build-debug/CMakeFiles/mediefight.dir
