@@ -4,6 +4,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <thread>
 #include <utils/res.h>
+#include <drawable/objmtlvbo.h>
+#include <iostream>
 
 void error_callback(int error, const char* description)
 {
@@ -39,6 +41,9 @@ int main(int argc, char** argv) {
     }
 
     ModelVBO objVBO(getResFolder() + "/models/whale.obj");
+    ObjMtlVBO objMtlVBO("/home/samuel/StudioProjects/Spectrix/app/src/main/assets/obj/snow/snow_baleine_obj.obj",
+                        "/home/samuel/StudioProjects/Spectrix/app/src/main/assets/obj/snow/snow_baleine_mtl.mtl",
+                        true);
 
     glm::mat4 projectionMatrix = glm::frustum(-1.f , 1.f , -768.f / 1024.f , 768.f / 1024.f , 1.0f, 50.0f);
     glm::mat4 viewMatrix = glm::lookAt(
@@ -59,11 +64,13 @@ int main(int argc, char** argv) {
     while (!glfwWindowShouldClose (window)) {
         glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), angle+=1e-2, glm::vec3(0.5f, 0.5f, 0.f));
         glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 30.f));
+        glm::vec3 cameraPosition = glm::vec3(0., 0., -1.);
         glm::mat4 modelMatrix = translate * rotation;
         glm::mat4 mvMatrix =  viewMatrix * modelMatrix;
         glm::mat4 mvpMatrix = projectionMatrix * mvMatrix;
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        objVBO.draw(mvpMatrix, mvMatrix, glm::vec3(0.0, 0.0, 0.0));
+        //objVBO.draw(mvpMatrix, mvMatrix, glm::vec3(0.0, 0.0, 0.0));
+        objMtlVBO.draw(mvpMatrix, mvMatrix, glm::vec3(0.), cameraPosition);
         glfwSwapBuffers (window);
         glfwPollEvents();
         std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));

@@ -55,6 +55,8 @@ private:
      */
     GLuint packedDataBufferId;
 
+    bool randomColor;
+
     void init();
     void bind();
     void bindBuffer(std::vector<float> packedData);
@@ -62,7 +64,7 @@ private:
 
 public:
     ObjMtlVBO(std::string objFileName, std::string mtlFileName, bool randomColor);
-    void draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::mat4 ligh_pos_in_eye_space, glm::mat4 camera_pos);
+    void draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::vec3 ligh_pos_in_eye_space, glm::vec3 camera_pos);
 };
 
 
