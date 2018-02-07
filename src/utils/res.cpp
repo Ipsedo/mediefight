@@ -8,14 +8,14 @@
 
 std::string getResFolder() {
     std::string this_file = __FILE__;
-    std::vector<std::string> splitted_path = split(this_file, '/');
+    std::vector<std::string> splittedPath = split(this_file, '/');
 
-    while (splitted_path.back() != "mediefight") {
-        splitted_path.pop_back();
+    while (splittedPath.back() != "mediefight") {
+        splittedPath.pop_back();
     }
 
     std::string res_path;
-    for (auto& elt : splitted_path) {
+    for (auto& elt : splittedPath) {
         res_path += "/" + elt;
     }
 
