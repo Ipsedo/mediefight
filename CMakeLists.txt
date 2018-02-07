@@ -13,4 +13,4 @@ link_libraries(${GLEW_LIBRARIES} ${GLFW_LIBRARIES} ${OPENGL_LIBRARIES})
 
 file(GLOB_RECURSE SOURCE_FILES "src/*.h" "src/*.cpp")
 
-add_executable(mediefight ${SOURCE_FILES} src/drawable/objmtlvbo.cpp src/drawable/objmtlvbo.h src/utils/string_utils.h src/utils/string_utils.cpp)
+add_executable(mediefight ${SOURCE_FILES})
