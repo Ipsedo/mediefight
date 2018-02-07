@@ -70,7 +70,7 @@ int main(int argc, char** argv) {
         glm::mat4 mvpMatrix = projectionMatrix * mvMatrix;
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         //objVBO.draw(mvpMatrix, mvMatrix, glm::vec3(0.0, 0.0, 0.0));
-        objMtlVBO.draw(mvpMatrix, mvMatrix, glm::vec3(0.), cameraPosition);
+        objMtlVBO.draw(mvpMatrix, mvMatrix, glm::vec3(0.f), cameraPosition);
         glfwSwapBuffers (window);
         glfwPollEvents();
         std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
