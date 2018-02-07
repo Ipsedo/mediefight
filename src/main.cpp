@@ -41,8 +41,8 @@ int main(int argc, char** argv) {
     }
 
     ModelVBO objVBO(getResFolder() + "/models/whale.obj");
-    ObjMtlVBO objMtlVBO("/home/samuel/StudioProjects/Spectrix/app/src/main/assets/obj/snow/snow_baleine_obj.obj",
-                        "/home/samuel/StudioProjects/Spectrix/app/src/main/assets/obj/snow/snow_baleine_mtl.mtl",
+    ObjMtlVBO objMtlVBO(getResFolder() + "/models/snow_baleine_obj.obj",
+                        getResFolder() + "/models/snow_baleine_mtl.mtl",
                         true);
 
     glm::mat4 projectionMatrix = glm::frustum(-1.f , 1.f , -768.f / 1024.f , 768.f / 1024.f , 1.0f, 50.0f);
