@@ -13,10 +13,10 @@ void error_callback(int error, const char* description)
 }
 
 int main(int argc, char** argv) {
-    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+    chrono::high_resolution_clock::time_point t1 = chrono::high_resolution_clock::now();
 
-    std::chrono::duration<double> time_span = t1.time_since_epoch();
-    std::srand((unsigned int)time_span.count());
+    chrono::duration<double> time_span = t1.time_since_epoch();
+    srand((unsigned int)time_span.count());
 
     if (!glfwInit()) {
         fprintf(stderr, "Failed GLFW initialization\n");
@@ -73,7 +73,7 @@ int main(int argc, char** argv) {
         objMtlVBO.draw(mvpMatrix, mvMatrix, glm::vec3(0.f), cameraPosition);
         glfwSwapBuffers (window);
         glfwPollEvents();
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
+        this_thread::sleep_for(chrono::milliseconds(1000 / 60));
     }
 
     glfwDestroyWindow(window);

@@ -11,11 +11,11 @@
 #include <utils/string_utils.h>
 #include <utils/res.h>
 
-ModelVBO::ModelVBO(std::string model_file_name) {
+ModelVBO::ModelVBO(string model_file_name) {
     init();
     bind();
-    std::vector<std::string> dot_split = split(model_file_name, '.');
-    std::string type = dot_split[dot_split.size() - 1];
+    vector<string> dot_split = split(model_file_name, '.');
+    string type = dot_split[dot_split.size() - 1];
     if (type == "obj")
         bindBuffer(parseObj(model_file_name));
     else if (type == "stl")
@@ -25,15 +25,15 @@ ModelVBO::ModelVBO(std::string model_file_name) {
 
     lightCoef = 1;
     distanceCoef = 0;
-    this->color = glm::vec4(std::rand(), std::rand(), std::rand(), 1.f);
+    this->color = glm::vec4(rand(), rand(), rand(), 1.f);
     this->color /= RAND_MAX;
 }
 
-ModelVBO::ModelVBO(std::string model_file_name, glm::vec4 color) {
+ModelVBO::ModelVBO(string model_file_name, glm::vec4 color) {
     init();
     bind();
-    std::vector<std::string> dot_split = split(model_file_name, '.');
-    std::string type = dot_split[dot_split.size() - 1];
+    vector<string> dot_split = split(model_file_name, '.');
+    string type = dot_split[dot_split.size() - 1];
     if (type == "obj")
         bindBuffer(parseObj(model_file_name));
     else if (type == "stl")
@@ -77,25 +77,25 @@ void ModelVBO::bindBuffer(std::vector<float> packedData) {
     packedData.clear();
 }
 
-std::vector<float> ModelVBO::parseObj(std::string objFileName) {
+std::vector<float> ModelVBO::parseObj(string objFileName) {
     nbVertex = 0;
 
-    std::ifstream in(objFileName);
+    ifstream in(objFileName);
 
     if (!in) {
-        std::cout << "Error during opening models file" << std::endl;
+        cout << "Error during opening models file" << endl;
         exit(0);
     }
-    std::string str;
+    string str;
 
-    std::vector<float> vertex_list;
-    std::vector<float> normal_list;
-    std::vector<int> vertex_draw_order;
-    std::vector<int> normal_draw_order;
+    vector<float> vertex_list;
+    vector<float> normal_list;
+    vector<int> vertex_draw_order;
+    vector<int> normal_draw_order;
 
     while (std::getline(in, str)) {
         //std::cout << str << std::endl;
-        std::vector<std::string> splitted_line = split(str, ' ');
+        vector<std::string> splitted_line = split(str, ' ');
         if(!splitted_line.empty()) {
             if (splitted_line[0] == "vn") {
                 normal_list.push_back(std::stof(splitted_line[1]));
@@ -106,28 +106,29 @@ std::vector<float> ModelVBO::parseObj(std::string objFileName) {
                 vertex_list.push_back(std::stof(splitted_line[2]));
                 vertex_list.push_back(std::stof(splitted_line[3]));
             } else if (splitted_line[0] == "f") {
-                std::vector<std::string> face1 = split(splitted_line[1], '/');
-                std::vector<std::string> face2 = split(splitted_line[2], '/');
-                std::vector<std::string> face3 = split(splitted_line[3], '/');
+                vector<string> v1 = split(splitted_line[1], '/');
+                vector<string> v2 = split(splitted_line[2], '/');
+                vector<string> v3 = split(splitted_line[3], '/');
 
-                vertex_draw_order.push_back(std::stoi(face1[0]));
-                vertex_draw_order.push_back(std::stoi(face2[0]));
-                vertex_draw_order.push_back(std::stoi(face3[0]));
+                vertex_draw_order.push_back(std::stoi(v1[0]));
+                vertex_draw_order.push_back(std::stoi(v2[0]));
+                vertex_draw_order.push_back(std::stoi(v3[0]));
 
-                normal_draw_order.push_back(std::stoi(face1[2]));
-                normal_draw_order.push_back(std::stoi(face2[2]));
-                normal_draw_order.push_back(std::stoi(face3[2]));
+                normal_draw_order.push_back(std::stoi(v1[2]));
+                normal_draw_order.push_back(std::stoi(v2[2]));
+                normal_draw_order.push_back(std::stoi(v3[2]));
 
-                face1.clear();
-                face2.clear();
-                face3.clear();
+                v1.clear();
+                v2.clear();
+                v3.clear();
             }
         }
+        splitted_line.clear();
     }
 
     in.close();
 
-    std::vector<float> packedData;
+    vector<float> packedData;
 
     for (int i = 0; i < vertex_draw_order.size(); i++) {
         packedData.push_back(vertex_list[(vertex_draw_order[i] - 1) * 3]);
@@ -148,7 +149,7 @@ std::vector<float> ModelVBO::parseObj(std::string objFileName) {
     return packedData;
 }
 
-float parseFloat(std::ifstream *file) {
+float parseFloat(ifstream *file) {
     char tmp[4];
     (*file).read(tmp, 4);
     float res;
@@ -156,13 +157,13 @@ float parseFloat(std::ifstream *file) {
     return res;
 }
 
-std::vector<float> ModelVBO::parseStl(std::string stlFileName) {
-    std::vector<float> res;
+vector<float> ModelVBO::parseStl(string stlFileName) {
+    vector<float> res;
 
-    std::ifstream file(stlFileName);
+    ifstream file(stlFileName);
 
     if (!file) {
-        std::cout << "Error during opening models file" << std::endl;
+        cout << "Error during opening models file" << endl;
         exit(0);
     }
 
@@ -195,7 +196,7 @@ std::vector<float> ModelVBO::parseStl(std::string stlFileName) {
         file.read(attribute, 2);
     }
 
-    std::cout << res.size() << " " << res.max_size() << std::endl;
+    cout << res.size() << " " << res.max_size() << endl;
 
     nbVertex = nb_triangles * 3;
     return res;

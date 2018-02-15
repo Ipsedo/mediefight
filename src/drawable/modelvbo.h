@@ -10,6 +10,8 @@
 #ifndef MEDIEFIGHT_OBJVBO_H
 #define MEDIEFIGHT_OBJVBO_H
 
+using namespace std;
+
 /**
  * One color object with VBO
  * Use OBJ or STL file
