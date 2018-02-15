@@ -206,29 +206,24 @@ void ObjMtlVBO::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::vec3 ligh_p
     glVertexAttribPointer(mPositionHandle, POSITION_DATA_SIZE, GL_FLOAT, GL_FALSE,
                           STRIDE, 0);
 
-    glBindBuffer(GL_ARRAY_BUFFER, packedDataBufferId);
     glEnableVertexAttribArray(mNormalHandle);
     glVertexAttribPointer(mNormalHandle, NORMAL_DATA_SIZE, GL_FLOAT, GL_FALSE,
                           STRIDE, (char *) NULL + POSITION_DATA_SIZE * BYTES_PER_FLOAT);
 
-    glBindBuffer(GL_ARRAY_BUFFER, packedDataBufferId);
     glEnableVertexAttribArray(mAmbColorHandle);
     glVertexAttribPointer(mAmbColorHandle, COLOR_DATA_SIZE, GL_FLOAT, GL_FALSE,
                           STRIDE, (char *) NULL + (POSITION_DATA_SIZE + NORMAL_DATA_SIZE) * BYTES_PER_FLOAT);
 
-    glBindBuffer(GL_ARRAY_BUFFER, packedDataBufferId);
     glEnableVertexAttribArray(mDiffColorHandle);
     glVertexAttribPointer(mDiffColorHandle, COLOR_DATA_SIZE, GL_FLOAT, GL_FALSE,
                           STRIDE,
                           (char *) NULL + (POSITION_DATA_SIZE + NORMAL_DATA_SIZE + COLOR_DATA_SIZE) * BYTES_PER_FLOAT);
 
-    glBindBuffer(GL_ARRAY_BUFFER, packedDataBufferId);
     glEnableVertexAttribArray(mSpecColorHandle);
     glVertexAttribPointer(mSpecColorHandle, COLOR_DATA_SIZE, GL_FLOAT, GL_FALSE,
                           STRIDE, (char *) NULL +
                                   (POSITION_DATA_SIZE + NORMAL_DATA_SIZE + COLOR_DATA_SIZE * 2) * BYTES_PER_FLOAT);
 
-    glBindBuffer(GL_ARRAY_BUFFER, packedDataBufferId);
     glEnableVertexAttribArray(mSpecShininessHandle);
     glVertexAttribPointer(mSpecShininessHandle, SHININESS_DATA_SIZE, GL_FLOAT, GL_FALSE,
                           STRIDE, (char *) NULL +

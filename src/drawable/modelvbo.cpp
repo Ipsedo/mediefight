@@ -210,7 +210,6 @@ void ModelVBO::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::vec3 light_p
     glVertexAttribPointer(mPositionHandle, POSITION_SIZE, GL_FLOAT, GL_FALSE,
             STRIDE, 0);
 
-    glBindBuffer(GL_ARRAY_BUFFER, packedDataBufferId);
     glEnableVertexAttribArray(mNormalHandle);
     glVertexAttribPointer(mNormalHandle, NORMAL_SIZE, GL_FLOAT, GL_FALSE,
             STRIDE, (char *)NULL + POSITION_SIZE * BYTES_PER_FLOAT);
@@ -232,7 +231,5 @@ void ModelVBO::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::vec3 light_p
     glDrawArrays(GL_TRIANGLES, 0, nbVertex);
 
     glDisableVertexAttribArray(mPositionHandle);
-    glDisableVertexAttribArray(mColorHandle);
     glDisableVertexAttribArray(mNormalHandle);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
