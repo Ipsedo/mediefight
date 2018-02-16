@@ -7,7 +7,9 @@
 #include "res.h"
 #include "string_utils.h"
 
-std::string getResFolder() {
+using namespace std;
+
+string getResFolder() {
     using namespace std;
     string this_file = __FILE__;
     vector<string> splittedPath = split(this_file, '/');

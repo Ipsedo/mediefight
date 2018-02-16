@@ -14,6 +14,8 @@
 
 #include "modelvbo.h"
 
+using namespace std;
+
 ModelVBO::ModelVBO(string model_file_name) {
     init();
     bind();
@@ -69,7 +71,7 @@ void ModelVBO::bind() {
     mNormalHandle = (GLuint) glGetAttribLocation(mProgram, "a_Normal");
 }
 
-void ModelVBO::bindBuffer(std::vector<float> packedData) {
+void ModelVBO::bindBuffer(vector<float> packedData) {
     glGenBuffers(1, &packedDataBufferId);
 
     glBindBuffer(GL_ARRAY_BUFFER, packedDataBufferId);
@@ -80,7 +82,7 @@ void ModelVBO::bindBuffer(std::vector<float> packedData) {
     packedData.clear();
 }
 
-std::vector<float> ModelVBO::parseObj(string objFileName) {
+vector<float> ModelVBO::parseObj(string objFileName) {
     nbVertex = 0;
 
     ifstream in(objFileName);

@@ -14,6 +14,8 @@
 
 #include "objmtlvbo.h"
 
+using namespace std;
+
 void ObjMtlVBO::init() {
     mProgram = glCreateProgram();
     GLuint vertexShader = loadShader(GL_VERTEX_SHADER, getResFolder() + "/shaders/specular_vs.glsl");
@@ -38,7 +40,7 @@ void ObjMtlVBO::bind() {
     mSpecShininessHandle = (GLuint) glGetAttribLocation(mProgram, "a_material_shininess");
 }
 
-void ObjMtlVBO::bindBuffer(std::vector<float> packedData) {
+void ObjMtlVBO::bindBuffer(vector<float> packedData) {
     glGenBuffers(1, &packedDataBufferId);
 
     glBindBuffer(GL_ARRAY_BUFFER, packedDataBufferId);
@@ -49,7 +51,7 @@ void ObjMtlVBO::bindBuffer(std::vector<float> packedData) {
     packedData.clear();
 }
 
-std::vector<float> ObjMtlVBO::parseObj(std::string objFileName, std::string mtlFileName) {
+vector<float> ObjMtlVBO::parseObj(string objFileName, string mtlFileName) {
     using namespace std;
     vector<float> res;
     map<string, glm::vec3> ambColor;
@@ -110,7 +112,7 @@ std::vector<float> ObjMtlVBO::parseObj(std::string objFileName, std::string mtlF
 
     ifstream objFile(objFileName);
     while (getline(objFile, str)) {
-        vector<std::string> splitted_line = split(str, ' ');
+        vector<string> splitted_line = split(str, ' ');
         if (!splitted_line.empty()) {
             if (splitted_line[0] == "usemtl") {
                 mtlToUse.push_back(splitted_line[1]);
@@ -192,7 +194,7 @@ std::vector<float> ObjMtlVBO::parseObj(std::string objFileName, std::string mtlF
     return res;
 }
 
-ObjMtlVBO::ObjMtlVBO(std::string objFileName, std::string mtlFileName, bool randomColor) {
+ObjMtlVBO::ObjMtlVBO(string objFileName, string mtlFileName, bool randomColor) {
     this->randomColor = randomColor;
     init();
     bind();

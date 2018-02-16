@@ -6,7 +6,9 @@
 
 #include "string_utils.h"
 
-std::vector<std::string> split(const std::string &s, char delim) {
+using namespace std;
+
+vector<string> split(const string &s, char delim) {
     using namespace std;
 
     stringstream ss(s);
