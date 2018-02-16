@@ -7,14 +7,15 @@
 #include "string_utils.h"
 
 std::string getResFolder() {
-    std::string this_file = __FILE__;
-    std::vector<std::string> splittedPath = split(this_file, '/');
+    using namespace std;
+    string this_file = __FILE__;
+    vector<string> splittedPath = split(this_file, '/');
 
     while (splittedPath.back() != "mediefight") {
         splittedPath.pop_back();
     }
 
-    std::string res_path;
+    string res_path;
     for (auto& elt : splittedPath) {
         res_path += "/" + elt;
     }

@@ -98,25 +98,25 @@ std::vector<float> ModelVBO::parseObj(string objFileName) {
         vector<std::string> splitted_line = split(str, ' ');
         if(!splitted_line.empty()) {
             if (splitted_line[0] == "vn") {
-                normal_list.push_back(std::stof(splitted_line[1]));
-                normal_list.push_back(std::stof(splitted_line[2]));
-                normal_list.push_back(std::stof(splitted_line[3]));
+                normal_list.push_back(stof(splitted_line[1]));
+                normal_list.push_back(stof(splitted_line[2]));
+                normal_list.push_back(stof(splitted_line[3]));
             } else if (splitted_line[0] == "v") {
-                vertex_list.push_back(std::stof(splitted_line[1]));
-                vertex_list.push_back(std::stof(splitted_line[2]));
-                vertex_list.push_back(std::stof(splitted_line[3]));
+                vertex_list.push_back(stof(splitted_line[1]));
+                vertex_list.push_back(stof(splitted_line[2]));
+                vertex_list.push_back(stof(splitted_line[3]));
             } else if (splitted_line[0] == "f") {
                 vector<string> v1 = split(splitted_line[1], '/');
                 vector<string> v2 = split(splitted_line[2], '/');
                 vector<string> v3 = split(splitted_line[3], '/');
 
-                vertex_draw_order.push_back(std::stoi(v1[0]));
-                vertex_draw_order.push_back(std::stoi(v2[0]));
-                vertex_draw_order.push_back(std::stoi(v3[0]));
+                vertex_draw_order.push_back(stoi(v1[0]));
+                vertex_draw_order.push_back(stoi(v2[0]));
+                vertex_draw_order.push_back(stoi(v3[0]));
 
-                normal_draw_order.push_back(std::stoi(v1[2]));
-                normal_draw_order.push_back(std::stoi(v2[2]));
-                normal_draw_order.push_back(std::stoi(v3[2]));
+                normal_draw_order.push_back(stoi(v1[2]));
+                normal_draw_order.push_back(stoi(v2[2]));
+                normal_draw_order.push_back(stoi(v3[2]));
 
                 v1.clear();
                 v2.clear();
