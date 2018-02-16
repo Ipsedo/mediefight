@@ -40,13 +40,14 @@ ModelVBO::ModelVBO(string model_file_name, glm::vec4 color) {
     bind();
     vector<string> dot_split = split(model_file_name, '.');
     string type = dot_split[dot_split.size() - 1];
+    vector<float> packedData;
     if (type == "obj")
-        bindBuffer(parseObj(model_file_name));
+        packedData = parseObj(model_file_name);
     else if (type == "stl")
-        bindBuffer(parseStl((model_file_name)));
+        packedData = parseStl((model_file_name));
     else
         perror("Unsuported file name !");
-
+    bindBuffer(packedData);
     lightCoef = 1;
     distanceCoef = 0;
     this->color = color;
