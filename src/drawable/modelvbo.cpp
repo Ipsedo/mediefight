@@ -5,11 +5,14 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
-#include "modelvbo.h"
-#include "utils/graphics/shader.h"
+
 #include <glm/gtc/type_ptr.hpp>
-#include <utils/string_utils.h>
-#include <utils/res.h>
+
+#include "../utils/graphics/shader.h"
+#include "../utils/string_utils.h"
+#include "../utils/res.h"
+
+#include "modelvbo.h"
 
 ModelVBO::ModelVBO(string model_file_name) {
     init();

@@ -3,13 +3,15 @@
 //
 
 #include <GL/glew.h>
-#include <utils/graphics/shader.h>
 #include <glm/gtc/type_ptr.hpp>
-#include <utils/res.h>
 #include <map>
 #include <fstream>
-#include <utils/string_utils.h>
 #include <iostream>
+
+#include "../utils/graphics/shader.h"
+#include "../utils/string_utils.h"
+#include "../utils/res.h"
+
 #include "objmtlvbo.h"
 
 void ObjMtlVBO::init() {

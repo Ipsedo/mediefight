@@ -2,13 +2,13 @@
 // Created by samuel on 19/01/18.
 //
 
+#ifndef MEDIEFIGHT_OBJVBO_H
+#define MEDIEFIGHT_OBJVBO_H
+
 #include <glm/glm.hpp>
 #include <string>
 #include <vector>
 #include <GL/glew.h>
-
-#ifndef MEDIEFIGHT_OBJVBO_H
-#define MEDIEFIGHT_OBJVBO_H
 
 using namespace std;
 

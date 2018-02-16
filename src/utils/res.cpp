@@ -2,8 +2,9 @@
 // Created by samuel on 02/02/18.
 //
 
-#include <utils/res.h>
 #include <vector>
+
+#include "res.h"
 #include "string_utils.h"
 
 std::string getResFolder() {
