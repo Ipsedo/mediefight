@@ -93,9 +93,9 @@ std::vector<float> ModelVBO::parseObj(string objFileName) {
     vector<int> vertex_draw_order;
     vector<int> normal_draw_order;
 
-    while (std::getline(in, str)) {
-        //std::cout << str << std::endl;
-        vector<std::string> splitted_line = split(str, ' ');
+    while (getline(in, str)) {
+        //cout << str << endl;
+        vector<string> splitted_line = split(str, ' ');
         if(!splitted_line.empty()) {
             if (splitted_line[0] == "vn") {
                 normal_list.push_back(stof(splitted_line[1]));

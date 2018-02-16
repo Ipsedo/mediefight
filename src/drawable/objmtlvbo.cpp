@@ -58,8 +58,8 @@ std::vector<float> ObjMtlVBO::parseObj(std::string objFileName, std::string mtlF
     ifstream mtlFile(mtlFileName);
     string str;
 
-    std::string currMtl;
-    while (std::getline(mtlFile, str)) {
+    string currMtl;
+    while (getline(mtlFile, str)) {
         vector<string> splitted_line = split(str, ' ');
         if (!splitted_line.empty()) {
             if (splitted_line[0] == "newmtl") {
