@@ -6,6 +6,7 @@ ORIGIN=$(pwd)
 
 DEFAULT_CMAKE_BUILD_DIR="build"
 BUILD_SUBDIR_NAME=".build_files"
+EXEC_NAME="mediefight"
 
 CMAKE_BUILD_DIR=${1}
 OUTPUT_DIR=${2}
@@ -28,9 +29,9 @@ mkdir -p ${BUILD_SUBDIR_NAME}
 cd ${BUILD_SUBDIR_NAME}
 cmake -DCMAKE_BUILD_TYPE=Release ../../..
 make
-mv prog ..
+mv ${EXEC_NAME} ..
 cd ..
-objdump -dC prog > prog.asm
+objdump -dC ${EXEC_NAME} > ${EXEC_NAME}.asm
 
 # Debug
 cd ../debug
@@ -38,6 +39,6 @@ mkdir -p ${BUILD_SUBDIR_NAME}
 cd ${BUILD_SUBDIR_NAME}
 cmake -DCMAKE_BUILD_TYPE=Debug ../../..
 make
-mv prog ..
+mv ${EXEC_NAME} ..
 cd ../
-objdump -dC prog > prog.asm
+objdump -dC ${EXEC_NAME} > ${EXEC_NAME}.asm
