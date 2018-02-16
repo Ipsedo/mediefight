@@ -6,6 +6,7 @@
 #define MEDIEFIGHT_OBJMTLVBO_H
 
 #include <string>
+#include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <vector>
 

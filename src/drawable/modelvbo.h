@@ -2,13 +2,13 @@
 // Created by samuel on 19/01/18.
 //
 
+#ifndef MEDIEFIGHT_OBJVBO_H
+#define MEDIEFIGHT_OBJVBO_H
+
 #include <glm/glm.hpp>
 #include <string>
 #include <vector>
 #include <GL/glew.h>
-
-#ifndef MEDIEFIGHT_OBJVBO_H
-#define MEDIEFIGHT_OBJVBO_H
 
 using namespace std;
 
@@ -17,7 +17,6 @@ using namespace std;
  * Use OBJ or STL file
  */
 class ModelVBO {
-
 private:
     // Data sizes
     const int POSITION_SIZE = 3;
@@ -48,13 +47,13 @@ private:
 
     void init();
     void bind();
-    void bindBuffer(std::vector<float> packedData);
-    std::vector<float> parseObj(std::string objFileName);
-    std::vector<float> parseStl(std::string stlFileName);
+    void bindBuffer(vector<float> packedData);
+    vector<float> parseObj(string objFileName);
+    vector<float> parseStl(string stlFileName);
 
 public:
-    ModelVBO(std::string model_file);
-    ModelVBO(std::string model_file_name, glm::vec4 color);
+    ModelVBO(string model_file);
+    ModelVBO(string model_file_name, glm::vec4 color);
     void draw(glm::mat4 mvp_Matrix, glm::mat4 mv_matrix, glm::vec3 light_pos);
 };
 

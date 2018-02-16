@@ -3,14 +3,18 @@
 //
 
 #include <GL/glew.h>
-#include <utils/graphics/shader.h>
 #include <glm/gtc/type_ptr.hpp>
-#include <utils/res.h>
 #include <map>
 #include <fstream>
-#include <utils/string_utils.h>
 #include <iostream>
+
+#include "../utils/graphics/shader.h"
+#include "../utils/string_utils.h"
+#include "../utils/res.h"
+
 #include "objmtlvbo.h"
+
+using namespace std;
 
 void ObjMtlVBO::init() {
     mProgram = glCreateProgram();
@@ -36,7 +40,7 @@ void ObjMtlVBO::bind() {
     mSpecShininessHandle = (GLuint) glGetAttribLocation(mProgram, "a_material_shininess");
 }
 
-void ObjMtlVBO::bindBuffer(std::vector<float> packedData) {
+void ObjMtlVBO::bindBuffer(vector<float> packedData) {
     glGenBuffers(1, &packedDataBufferId);
 
     glBindBuffer(GL_ARRAY_BUFFER, packedDataBufferId);
@@ -47,24 +51,25 @@ void ObjMtlVBO::bindBuffer(std::vector<float> packedData) {
     packedData.clear();
 }
 
-std::vector<float> ObjMtlVBO::parseObj(std::string objFileName, std::string mtlFileName) {
-    std::vector<float> res;
-    std::map<std::string, glm::vec3> ambColor;
-    std::map<std::string, glm::vec3> diffColor;
-    std::map<std::string, glm::vec3> specColor;
-    std::map<std::string, float> shin;
+vector<float> ObjMtlVBO::parseObj(string objFileName, string mtlFileName) {
+    using namespace std;
+    vector<float> res;
+    map<string, glm::vec3> ambColor;
+    map<string, glm::vec3> diffColor;
+    map<string, glm::vec3> specColor;
+    map<string, float> shin;
 
-    std::ifstream mtlFile(mtlFileName);
-    std::string str;
+    ifstream mtlFile(mtlFileName);
+    string str;
 
-    std::string currMtl;
-    while (std::getline(mtlFile, str)) {
-        std::vector<std::string> splitted_line = split(str, ' ');
+    string currMtl;
+    while (getline(mtlFile, str)) {
+        vector<string> splitted_line = split(str, ' ');
         if (!splitted_line.empty()) {
             if (splitted_line[0] == "newmtl") {
                 currMtl = splitted_line[1];
             } else if (splitted_line[0] == "Ka") {
-                std::pair<std::string, glm::vec3>
+                pair<string, glm::vec3>
                         tmp(currMtl,
                             glm::vec3(strtof(splitted_line[1].c_str(), NULL),
                                       strtof(splitted_line[2].c_str(), NULL),
@@ -72,7 +77,7 @@ std::vector<float> ObjMtlVBO::parseObj(std::string objFileName, std::string mtlF
                 );
                 ambColor.insert(tmp);
             } else if (splitted_line[0] == "Kd") {
-                std::pair<std::string, glm::vec3>
+                pair<string, glm::vec3>
                         tmp(currMtl,
                             glm::vec3(strtof(splitted_line[1].c_str(), NULL),
                                       strtof(splitted_line[2].c_str(), NULL),
@@ -80,7 +85,7 @@ std::vector<float> ObjMtlVBO::parseObj(std::string objFileName, std::string mtlF
                 );
                 diffColor.insert(tmp);
             } else if (splitted_line[0] == "Ks") {
-                std::pair<std::string, glm::vec3>
+                pair<string, glm::vec3>
                         tmp(currMtl,
                             glm::vec3(strtof(splitted_line[1].c_str(), NULL),
                                       strtof(splitted_line[2].c_str(), NULL),
@@ -88,26 +93,26 @@ std::vector<float> ObjMtlVBO::parseObj(std::string objFileName, std::string mtlF
                 );
                 specColor.insert(tmp);
             } else if (splitted_line[0] == "Ns") {
-                std::pair<std::string, float> tmp(currMtl, strtof(splitted_line[1].c_str(), 0));
+                pair<string, float> tmp(currMtl, strtof(splitted_line[1].c_str(), 0));
                 shin.insert(tmp);
             }
         }
     }
     mtlFile.close();
 
-    std::vector<float> currVertixsList;
-    std::vector<float> currNormalsList;
-    std::vector<int> currVertexDrawOrderList;
-    std::vector<int> currNormalDrawOrderList;
-    std::vector<std::vector<int>> allVertexDrawOrderList;
-    std::vector<std::vector<int>> allNormalDrawOrderList;
-    std::vector<std::string> mtlToUse;
+    vector<float> currVertixsList;
+    vector<float> currNormalsList;
+    vector<int> currVertexDrawOrderList;
+    vector<int> currNormalDrawOrderList;
+    vector<vector<int>> allVertexDrawOrderList;
+    vector<vector<int>> allNormalDrawOrderList;
+    vector<string> mtlToUse;
 
     int idMtl = 0;
 
-    std::ifstream objFile(objFileName);
-    while (std::getline(objFile, str)) {
-        std::vector<std::string> splitted_line = split(str, ' ');
+    ifstream objFile(objFileName);
+    while (getline(objFile, str)) {
+        vector<string> splitted_line = split(str, ' ');
         if (!splitted_line.empty()) {
             if (splitted_line[0] == "usemtl") {
                 mtlToUse.push_back(splitted_line[1]);
@@ -189,7 +194,7 @@ std::vector<float> ObjMtlVBO::parseObj(std::string objFileName, std::string mtlF
     return res;
 }
 
-ObjMtlVBO::ObjMtlVBO(std::string objFileName, std::string mtlFileName, bool randomColor) {
+ObjMtlVBO::ObjMtlVBO(string objFileName, string mtlFileName, bool randomColor) {
     this->randomColor = randomColor;
     init();
     bind();

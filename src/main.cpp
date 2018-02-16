@@ -1,11 +1,12 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <drawable/modelvbo.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <thread>
-#include <utils/res.h>
-#include <drawable/objmtlvbo.h>
 #include <iostream>
+
+#include "drawable/modelvbo.h"
+#include "drawable/objmtlvbo.h"
+#include "utils/res.h"
 
 void error_callback(int error, const char* description)
 {
