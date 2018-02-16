@@ -30,8 +30,9 @@ ModelVBO::ModelVBO(string model_file_name) {
 
     lightCoef = 1;
     distanceCoef = 0;
-    this->color = glm::vec4(rand(), rand(), rand(), 1.f);
-    this->color /= RAND_MAX;
+    glm::vec3 tmp = glm::vec3(rand(), rand(), rand());
+    tmp /= RAND_MAX;
+    this->color = glm::vec4(tmp, 1.0f);
 }
 
 ModelVBO::ModelVBO(string model_file_name, glm::vec4 color) {
