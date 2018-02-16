@@ -203,8 +203,6 @@ vector<float> ModelVBO::parseStl(string stlFileName) {
         file.read(attribute, 2);
     }
 
-    cout << res.size() << " " << res.max_size() << endl;
-
     nbVertex = nb_triangles * 3;
     return res;
 }
