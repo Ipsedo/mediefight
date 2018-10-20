@@ -4,7 +4,6 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include <sstream>
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -13,6 +12,7 @@
 #include "../utils/res.h"
 
 #include "modelvbo.h"
+#include "../utils/parsing/parse.h"
 
 using namespace std;
 
@@ -154,14 +154,6 @@ vector<float> ModelVBO::parseObj(string objFileName) {
     normal_draw_order.clear();
 
     return packedData;
-}
-
-float parseFloat(ifstream *file) {
-    char tmp[4];
-    (*file).read(tmp, 4);
-    float res;
-    memcpy(&res, tmp, sizeof(char) * 4);
-    return res;
 }
 
 vector<float> ModelVBO::parseStl(string stlFileName) {
