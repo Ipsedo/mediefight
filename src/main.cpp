@@ -47,6 +47,8 @@ int main(int argc, char** argv) {
     ObjMtlVBO objMtlVBO(getResFolder() + "/models/snow_baleine_obj.obj",
                         getResFolder() + "/models/snow_baleine_mtl.mtl",
                         true);
+	SquareMap squareMap(getResFolder() + "/textures/151.png",
+						getResFolder() + "/textures/151_norm.png");
 
     glm::mat4 projectionMatrix = glm::frustum(-1.f , 1.f , -768.f / 1024.f , 768.f / 1024.f , 1.0f, 50.0f);
     glm::mat4 viewMatrix = glm::lookAt(
@@ -73,7 +75,8 @@ int main(int argc, char** argv) {
         glm::mat4 mvpMatrix = projectionMatrix * mvMatrix;
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         //objVBO.draw(mvpMatrix, mvMatrix, glm::vec3(0.0, 0.0, 0.0));
-        objMtlVBO.draw(mvpMatrix, mvMatrix, glm::vec3(0.f), cameraPosition);
+        //objMtlVBO.draw(mvpMatrix, mvMatrix, glm::vec3(0.f), cameraPosition);
+		squareMap.draw(mvpMatrix, mvMatrix, glm::vec3(0.0, 0.0, 0.0));
         glfwSwapBuffers (window);
         glfwPollEvents();
         this_thread::sleep_for(chrono::milliseconds(1000 / 60));
