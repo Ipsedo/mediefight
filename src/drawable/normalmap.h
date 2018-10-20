@@ -14,10 +14,30 @@ using namespace std;
 
 class SquareMap {
 private:
+	const int POSITION_SIZE = 3;
+	const int TEX_COORD_SIZE = 2;
+	const int BYTES_PER_FLOAT = 4;
+	const int STRIDE = (POSITION_SIZE + TEX_COORD_SIZE) * BYTES_PER_FLOAT;
+
 	GLuint mProgram;
+	GLuint mPositionHandle;
+	GLuint mTextCoordHandle;
+	GLuint mMVPMatrixHandle;
+	GLuint mLightPosHandle;
+	GLuint mMVMatrixHandle;
+	GLuint mDistanceCoefHandle;
+	GLuint mLightCoefHandle;
+	GLuint mTexHandle;
+	GLuint mNormalMapHAndle;
+
+	GLuint buffer;
+
 	GLuint textures[2];
+
 	void initPrgm();
 	void initTex(string textureFile, string normalsFile);
+	void bind();
+	void genBuffer();
 public:
 	SquareMap(string textureFile, string normalsFile);
 	void draw(glm::mat4 mvpMatrix, glm::mat4 mvMatrix, glm::vec3 lightPos);
