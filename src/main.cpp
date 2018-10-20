@@ -8,6 +8,8 @@
 #include "drawable/objmtlvbo.h"
 #include "utils/res.h"
 
+#include "drawable/normalmap.h"
+
 void error_callback(int error, const char* description)
 {
     fputs(description, stderr);
@@ -70,8 +72,8 @@ int main(int argc, char** argv) {
         glm::mat4 mvMatrix =  viewMatrix * modelMatrix;
         glm::mat4 mvpMatrix = projectionMatrix * mvMatrix;
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        objVBO.draw(mvpMatrix, mvMatrix, glm::vec3(0.0, 0.0, 0.0));
-        //objMtlVBO.draw(mvpMatrix, mvMatrix, glm::vec3(0.f), cameraPosition);
+        //objVBO.draw(mvpMatrix, mvMatrix, glm::vec3(0.0, 0.0, 0.0));
+        objMtlVBO.draw(mvpMatrix, mvMatrix, glm::vec3(0.f), cameraPosition);
         glfwSwapBuffers (window);
         glfwPollEvents();
         this_thread::sleep_for(chrono::milliseconds(1000 / 60));
