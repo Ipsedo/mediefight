@@ -73,7 +73,7 @@ void NormalMapModel::bind() {
 	mLightCoefHandle = (GLuint) glGetUniformLocation(mProgram, "u_light_coef");
 
 	mTexHandle = (GLuint) glGetUniformLocation(mProgram, "u_tex");
-	mNormalMapHAndle = (GLuint) glGetUniformLocation(mProgram, "u_normalMap");
+	mNormalMapHandle = (GLuint) glGetUniformLocation(mProgram, "u_normalMap");
 }
 
 void NormalMapModel::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::mat4 m_matrix, glm::vec3 lightPos) {
@@ -120,7 +120,7 @@ void NormalMapModel::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::mat4 m
 
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, textures[1]);
-	glUniform1i(mNormalMapHAndle, 0);
+	glUniform1i(mNormalMapHandle, 0);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 

@@ -35,7 +35,7 @@ private:
 	GLuint mDistanceCoefHandle;
 	GLuint mLightCoefHandle;
 	GLuint mTexHandle;
-	GLuint mNormalMapHAndle;
+	GLuint mNormalMapHandle;
 
 	GLuint buffer;
 
