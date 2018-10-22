@@ -8,40 +8,58 @@
 #include "normalmap.h"
 #include "../utils/graphics/shader.h"
 #include "../utils/res.h"
+#include "../utils/graphics/gl_utils.h"
 
-SquareMap::SquareMap(string textureFile, string normalsFile) {
-	glEnable(GL_TEXTURE_2D);
+SquareMap::SquareMap(string textureFile, string normalsFile) : textures(new GLuint[2]) {
+	/*glEnable(GL_TEXTURE_2D);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);*/
 	initPrgm();
-	initTex(textureFile, normalsFile);
+	initTex(move(textureFile), move(normalsFile));
 	bind();
 	genBuffer();
 }
 
 void SquareMap::initTex(string textureFile, string normalsFile) {
-	libpng_image colorTex = readPNG(textureFile);
-	imgRGB imgRGB1 = toColoredImage(colorTex);
 
-	libpng_image normalsTex = readPNG(normalsFile);
-	imgRGB imgRGB2 = toColoredImage(colorTex);
+	imgRGB imgRGB1 = loadImage(move(textureFile));
+
+	imgRGB imgRGB2 = loadImage(move(normalsFile));
+
 
 	glGenTextures(2, textures);
 
-	glBindTexture(GL_TEXTURE_2D, textures[0]);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imgRGB1.width, imgRGB1.height, 0, GL_RGB, GL_FLOAT, imgRGB1.colors);
+	/*glBindTexture(GL_TEXTURE_2D, textures[0]);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imgRGB1.width, imgRGB1.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imgRGB1.colors);
 
 	glBindTexture(GL_TEXTURE_2D, textures[1]);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imgRGB2.width, imgRGB2.height, 0, GL_RGB, GL_FLOAT, imgRGB2.colors);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imgRGB2.width, imgRGB2.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imgRGB2.colors);*/
+	glBindTexture(GL_TEXTURE_2D, textures[0]);
+
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE , GL_MODULATE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, imgRGB1.width, imgRGB1.height, GL_RGB, GL_UNSIGNED_BYTE, imgRGB1.colors);
+
+	glBindTexture(GL_TEXTURE_2D, textures[1]);
+
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE , GL_MODULATE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, imgRGB2.width, imgRGB2.height, GL_RGB, GL_UNSIGNED_BYTE, imgRGB2.colors);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	delete[] imgRGB1.colors;
 	delete[] imgRGB2.colors;
-
-	delete[] normalsTex.data;
-	delete[] normalsTex.rowPtrs;
-
-	delete[] colorTex.data;
-	delete[] colorTex.rowPtrs;
 }
 
 void SquareMap::initPrgm() {
@@ -70,8 +88,6 @@ void SquareMap::bind() {
 }
 
 void SquareMap::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::vec3 lightPos) {
-	glEnable(GL_TEXTURE_2D);
-
 	glUseProgram(mProgram);
 
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
@@ -83,7 +99,7 @@ void SquareMap::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::vec3 lightP
 	glVertexAttribPointer(mTextCoordHandle, TEX_COORD_SIZE, GL_FLOAT, GL_FALSE,
 						  STRIDE, (char *)NULL + POSITION_SIZE * BYTES_PER_FLOAT);
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glUniformMatrix4fv(mMVMatrixHandle, 1, GL_FALSE, glm::value_ptr(mv_matrix));
 
@@ -97,44 +113,44 @@ void SquareMap::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::vec3 lightP
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textures[0]);
-	glUniform1i(mTexHandle, textures[0]);
+	glUniform1i(mTexHandle, 0);
 
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, textures[1]);
-	glUniform1i(mNormalMapHAndle, textures[1]);
+	glUniform1i(mNormalMapHAndle, 0);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
+	//glBindTexture(GL_TEXTURE_2D, 0);
 
-	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glDrawArrays(GL_TRIANGLES, 0, 12);
 
 	glDisableVertexAttribArray(mPositionHandle);
 	glDisableVertexAttribArray(mTextCoordHandle);
+	checkGLError();
 }
 
 void SquareMap::genBuffer() {
-	float vertices[3 * 3 * 2 + 3 * 2 * 2] = {
-			// Fst triangle
-			-1.f, 1.f, 0.f, // fst vertex
-			0.f, 1.f,       // fst text coord
-			1.f, -1.f, 0.f,
-			1.f, 0.f,
-			-1.f, -1.f, 0.f,
-			0.f, 0.f,
+	float vertices[(3 * 3 * 2 + 3 * 2 * 2) * 2] = {
+			-1.0f, 1.0f, 1e-1f,    0.0f, 0.0f,
+			-1.0f, -1.0f, 1e-1f,   0.0f, 1.0f,
+			1.0f, 1.0f, 1e-1f,     1.0f, 0.0f,
 
-			// Snd triangle
-			-1.f, 1.f, 0.f,
-			0.f, 1.f,
-			1.f, -1.f, 0.f,
-			1.f, 0.f,
-			1.f, 1.f, 0.f,
-			1.f, 1.f
+			-1.0f, -1.0f, 1e-1f,   0.0f, 1.0f,
+			1.0f, -1.0f, 1e-1f,    1.0f, 1.0f,
+			1.0f, 1.0f, 1e-1f,     1.0f, 0.0f,
 
+			1.0f, 1.0f, -1e-1f,    0.0f, 0.0f,
+			1.0f, -1.0f, -1e-1f,   0.0f, 1.0f,
+			-1.0f, 1.0f, -1e-1f,   1.0f, 0.0f,
+
+			1.0f, -1.0f, -1e-1f,   0.0f, 1.0f,
+			-1.0f, -1.0f, -1e-1f,  1.0f, 1.0f,
+			-1.0f, 1.0f, -1e-1f,   1.0f, 0.0f
 	};
 
 	glGenBuffers(1, &buffer);
 
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, (3 * 3 * 2 + 3 * 2 * 2) * BYTES_PER_FLOAT, vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 2 * (3 * 3 * 2 + 3 * 2 * 2) * BYTES_PER_FLOAT, vertices, GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

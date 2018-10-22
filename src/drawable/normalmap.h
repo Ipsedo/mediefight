@@ -32,7 +32,7 @@ private:
 
 	GLuint buffer;
 
-	GLuint textures[2];
+	GLuint *textures;
 
 	void initPrgm();
 	void initTex(string textureFile, string normalsFile);
