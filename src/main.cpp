@@ -49,12 +49,12 @@ int main(int argc, char** argv) {
                         true);
 	NormalMapModel squareMap(getResFolder() + "/models/cube.obj",
 			getResFolder() + "/textures/white.png",
-							 getResFolder() + "/textures/NormalMap.png");
+							 getResFolder() + "/textures/Q566o.png");
 
     glm::mat4 projectionMatrix = glm::frustum(-1.f , 1.f , -768.f / 1024.f , 768.f / 1024.f , 1.0f, 50.0f);
     glm::mat4 viewMatrix = glm::lookAt(
-            glm::vec3(0., 0., -1.),
-            glm::vec3(0., 0., 5.),
+            glm::vec3(0., 0., -4.),
+            glm::vec3(0., 0., 1.),
             glm::vec3(0,1,0)
     );
 
@@ -66,20 +66,21 @@ int main(int argc, char** argv) {
     glDepthFunc(GL_LEQUAL);
     glDepthMask(GL_TRUE);
 
-	float angleCam = 0.f;
+	float angleLight = 0.f, rangeLight = 20.f;
     float angle = 0.0f;
     while (!glfwWindowShouldClose (window)) {
-        glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), angle+=5e-3, glm::vec3(0.0f, 1.f, 0.f));
+        glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), angle+=1e-3, glm::vec3(0.0f, 1.f, 0.f));
         glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 2.f));
+		glm::mat4 scale = glm::scale(glm::mat4(1.f), glm::vec3(5.f));
         glm::vec3 cameraPosition = glm::vec3(0., 0., -1.);
-        glm::mat4 modelMatrix = translate * rotation;
+        glm::mat4 modelMatrix = scale * translate * rotation;
         glm::mat4 mvMatrix =  viewMatrix * modelMatrix;
         glm::mat4 mvpMatrix = projectionMatrix * mvMatrix;
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//angleCam += 1e-2f;
         //objVBO.draw(mvpMatrix, mvMatrix, glm::vec3(50.f*cos(angleCam),0.f,50.f*sin(angleCam)));
         //objMtlVBO.draw(mvpMatrix, mvMatrix, glm::vec3(0.f), cameraPosition);
-		squareMap.draw(mvpMatrix, mvMatrix, glm::vec3(5.f*cos(angleCam),0.f,5.f*sin(angleCam)));
+		squareMap.draw(mvpMatrix, mvMatrix, glm::vec3(rangeLight*cos(angleLight),0.f,rangeLight*sin(angleLight)), cameraPosition);
         glfwSwapBuffers (window);
         glfwPollEvents();
         this_thread::sleep_for(chrono::milliseconds(1000 / 60));
