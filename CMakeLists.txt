@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.5.1)
 project(mediefight C CXX)
 
 set(CMAKE_CXX_STANDARD 11)
