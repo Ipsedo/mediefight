@@ -12,7 +12,7 @@ varying mat3 v_TBN;
 
 void main() {
     vec3 normalColor = texture2D(u_normalMap, v_TexCoord).rgb;
-    vec3 colors = texture2D(u_tex, v_TexCoord).rgb;
+    vec3 color = texture2D(u_tex, v_TexCoord).rgb;
 
     vec3 normal = normalize(v_TBN * normalize(2.0 * normalColor - 1.0));
 
@@ -24,5 +24,5 @@ void main() {
 
     diffuse = diffuse * (1.0 / (1.0 + (u_distance_coef * distance * distance)));
 
-    gl_FragColor = vec4(colors, 1.0) * diffuse;
+    gl_FragColor = vec4(color, 1.0) * diffuse;
 }
