@@ -14,8 +14,8 @@
 
 NormalMapModel::NormalMapModel(string objFile, string textureFile, string normalsFile) : textures(new GLuint[2]) {
 	initPrgm();
-	initTex(move(textureFile), move(normalsFile));
 	bind();
+	initTex(move(textureFile), move(normalsFile));
 	genBuffer(move(objFile));
 }
 
@@ -27,6 +27,7 @@ void NormalMapModel::initTex(string textureFile, string normalsFile) {
 
 	glGenTextures(2, textures);
 
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textures[0]);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -34,6 +35,7 @@ void NormalMapModel::initTex(string textureFile, string normalsFile) {
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imgRGB1.width, imgRGB1.height, 0, GL_RGB, GL_UNSIGNED_BYTE, imgRGB1.colors);
 
+	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, textures[1]);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -73,9 +75,7 @@ void NormalMapModel::bind() {
 	mLightCoefHandle = (GLuint) glGetUniformLocation(mProgram, "u_light_coef");
 
 	mTexHandle = (GLuint) glGetUniformLocation(mProgram, "u_tex");
-	cout << mTexHandle << endl;
 	mNormalMapHandle = (GLuint) glGetUniformLocation(mProgram, "u_normalMap");
-	cout << mNormalMapHandle <<endl;
 }
 
 void NormalMapModel::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::mat4 m_matrix, glm::vec3 lightPos) {
@@ -117,12 +117,12 @@ void NormalMapModel::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::mat4 m
 	glUniform1f(mLightCoefHandle, 1.f);
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, textures[0]);
 	glUniform1i(mTexHandle, 0);
+	glBindTexture(GL_TEXTURE_2D, textures[0]);
 
 	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, textures[1]);
 	glUniform1i(mNormalMapHandle, 1);
+	glBindTexture(GL_TEXTURE_2D, textures[1]);
 
 	glDrawArrays(GL_TRIANGLES, 0, nbVertex);
 
@@ -130,7 +130,7 @@ void NormalMapModel::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::mat4 m
 	glDisableVertexAttribArray(mTextCoordHandle);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
-	//checkGLError();
+	checkGLError();
 }
 
 void NormalMapModel::genBuffer(string objFileName) {
@@ -311,4 +311,5 @@ vector<float> NormalMapModel::parseObj(string objFileName) {
 
 NormalMapModel::~NormalMapModel() {
 	glDeleteTextures(2, textures);
+	// TODO desaloué images textures
 }
