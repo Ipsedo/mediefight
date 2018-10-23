@@ -16,7 +16,7 @@ NormalMapModel::NormalMapModel(string objFile, string textureFile, string normal
 	initPrgm();
 	initTex(move(textureFile), move(normalsFile));
 	bind();
-	genBuffer(objFile);
+	genBuffer(move(objFile));
 }
 
 void NormalMapModel::initTex(string textureFile, string normalsFile) {
@@ -28,17 +28,17 @@ void NormalMapModel::initTex(string textureFile, string normalsFile) {
 	glGenTextures(2, textures);
 
 	glBindTexture(GL_TEXTURE_2D, textures[0]);
-	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imgRGB1.width, imgRGB1.height, 0, GL_RGB, GL_UNSIGNED_BYTE, imgRGB1.colors);
 
 	glBindTexture(GL_TEXTURE_2D, textures[1]);
-	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imgRGB2.width, imgRGB2.height, 0, GL_RGB, GL_UNSIGNED_BYTE, imgRGB2.colors);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -73,7 +73,9 @@ void NormalMapModel::bind() {
 	mLightCoefHandle = (GLuint) glGetUniformLocation(mProgram, "u_light_coef");
 
 	mTexHandle = (GLuint) glGetUniformLocation(mProgram, "u_tex");
+	cout << mTexHandle << endl;
 	mNormalMapHandle = (GLuint) glGetUniformLocation(mProgram, "u_normalMap");
+	cout << mNormalMapHandle <<endl;
 }
 
 void NormalMapModel::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::mat4 m_matrix, glm::vec3 lightPos) {
@@ -120,14 +122,14 @@ void NormalMapModel::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::mat4 m
 
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, textures[1]);
-	glUniform1i(mNormalMapHandle, 0);
-
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glUniform1i(mNormalMapHandle, 1);
 
 	glDrawArrays(GL_TRIANGLES, 0, nbVertex);
 
 	glDisableVertexAttribArray(mPositionHandle);
 	glDisableVertexAttribArray(mTextCoordHandle);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 	//checkGLError();
 }
 
@@ -222,16 +224,16 @@ vector<float> NormalMapModel::parseObj(string objFileName) {
 
 		// UVs
 		glm::vec2 uv0;
-		uv0.x = uv_list[(uv_draw_order[i] - 1) * 3];
-		uv0.y = uv_list[(uv_draw_order[i] - 1) * 3 + 1];
+		uv0.x = uv_list[(uv_draw_order[i] - 1) * 2];
+		uv0.y = uv_list[(uv_draw_order[i] - 1) * 2 + 1];
 
 		glm::vec2 uv1;
-		uv1.x = uv_list[(uv_draw_order[i + 1] - 1) * 3];
-		uv1.y = uv_list[(uv_draw_order[i + 1] - 1) * 3 + 1];
+		uv1.x = uv_list[(uv_draw_order[i + 1] - 1) * 2];
+		uv1.y = uv_list[(uv_draw_order[i + 1] - 1) * 2 + 1];
 
 		glm::vec2 uv2;
-		uv2.x = uv_list[(uv_draw_order[i + 2] - 1) * 3];
-		uv2.y = uv_list[(uv_draw_order[i + 2] - 1) * 3 + 1];
+		uv2.x = uv_list[(uv_draw_order[i + 2] - 1) * 2];
+		uv2.y = uv_list[(uv_draw_order[i + 2] - 1) * 2 + 1];
 
 		// http://www.opengl-tutorial.org/fr/intermediate-tutorials/tutorial-13-normal-mapping/
 		glm::vec3 deltaPos1 = v1-v0;
@@ -272,8 +274,8 @@ vector<float> NormalMapModel::parseObj(string objFileName) {
 
 		// UVs
 		glm::vec2 uv0;
-		uv0.x = uv_list[(uv_draw_order[i] - 1) * 3];
-		uv0.y = uv_list[(uv_draw_order[i] - 1) * 3 + 1];
+		uv0.x = uv_list[(uv_draw_order[i] - 1) * 2];
+		uv0.y = uv_list[(uv_draw_order[i] - 1) * 2 + 1];
 
 		packedData.push_back(v0.x);
 		packedData.push_back(v0.y);
@@ -305,4 +307,8 @@ vector<float> NormalMapModel::parseObj(string objFileName) {
 	uv_draw_order.clear();
 
 	return packedData;
+}
+
+NormalMapModel::~NormalMapModel() {
+	glDeleteTextures(2, textures);
 }

@@ -51,6 +51,7 @@ private:
 public:
 	NormalMapModel(string objFile, string textureFile, string normalsFile);
 	void draw(glm::mat4 mvpMatrix, glm::mat4 mvMatrix, glm::mat4 m_matrix,  glm::vec3 lightPos);
+	~NormalMapModel();
 };
 
 
