@@ -6,6 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include <fstream>
+#include <unordered_map>
 #include "normalmap.h"
 #include "../utils/graphics/shader.h"
 #include "../utils/res.h"
@@ -61,7 +62,6 @@ void NormalMapModel::initPrgm() {
 void NormalMapModel::bind() {
 	mMVPMatrixHandle = (GLuint) glGetUniformLocation(mProgram, "u_MVPMatrix");
 	mMVMatrixHandle = (GLuint) glGetUniformLocation(mProgram, "u_MVMatrix");
-	mMMatrixHandle = (GLuint) glGetUniformLocation(mProgram, "u_MMatrix");
 
 	mPositionHandle = (GLuint) glGetAttribLocation(mProgram, "a_Position");
 	mTextCoordHandle = (GLuint) glGetAttribLocation(mProgram, "a_TexCoord");
@@ -78,7 +78,7 @@ void NormalMapModel::bind() {
 	mNormalMapHandle = (GLuint) glGetUniformLocation(mProgram, "u_normalMap");
 }
 
-void NormalMapModel::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::mat4 m_matrix, glm::vec3 lightPos) {
+void NormalMapModel::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::vec3 lightPos) {
 	glUseProgram(mProgram);
 
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
@@ -103,8 +103,6 @@ void NormalMapModel::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::mat4 m
 						  STRIDE, (char *)NULL + (POSITION_SIZE + NORMAL_SIZE + TANGENT_SIZE + BITANGENT_SIZE) *  BYTES_PER_FLOAT);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glUniformMatrix4fv(mMMatrixHandle, 1, GL_FALSE, glm::value_ptr(m_matrix));
 
 	glUniformMatrix4fv(mMVMatrixHandle, 1, GL_FALSE, glm::value_ptr(mv_matrix));
 
@@ -206,7 +204,27 @@ vector<float> NormalMapModel::parseObj(string objFileName) {
 
 	vector<glm::vec3> tangents;
 	vector<glm::vec3> bitangents;
+	unordered_map<glm::vec3, tuple<glm::vec3, glm::vec3>, KeyFuncs, KeyFuncs> map;
 	for (int i = 0; i < vertex_draw_order.size(); i+=3) {
+
+		// Normal
+		glm::vec3 n;
+		n.x = normal_list[(normal_draw_order[i] - i) * 3];
+		n.y = normal_list[(normal_draw_order[i] - i) * 3 + 1];
+		n.z = normal_list[(normal_draw_order[i] - i) * 3 + 2];
+		if (map.find(n) != map.end()) {
+			auto t = map[n];
+			glm::vec3 tangent = get<0>(t);
+			glm::vec3 bitangent = get<1>(t);
+
+			tangents.push_back(tangent);
+			tangents.push_back(tangent);
+			tangents.push_back(tangent);
+
+			bitangents.push_back(bitangent);
+			bitangents.push_back(bitangent);
+			bitangents.push_back(bitangent);
+		}
 		glm::vec3 v0;
 		v0.x = vertex_list[(vertex_draw_order[i] - 1) * 3];
 		v0.y = vertex_list[(vertex_draw_order[i] - 1) * 3 + 1];
@@ -254,6 +272,8 @@ vector<float> NormalMapModel::parseObj(string objFileName) {
 		bitangents.push_back(bitangent);
 		bitangents.push_back(bitangent);
 		bitangents.push_back(bitangent);
+
+		map[n] = tuple<glm::vec3, glm::vec3>(tangent, bitangent);
 	}
 
 

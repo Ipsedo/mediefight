@@ -31,7 +31,6 @@ private:
 	GLuint mMVPMatrixHandle;
 	GLuint mLightPosHandle;
 	GLuint mMVMatrixHandle;
-	GLuint mMMatrixHandle;
 	GLuint mDistanceCoefHandle;
 	GLuint mLightCoefHandle;
 	GLuint mTexHandle;
@@ -50,9 +49,20 @@ private:
 	vector<float> parseObj(string objFileName);
 public:
 	NormalMapModel(string objFile, string textureFile, string normalsFile);
-	void draw(glm::mat4 mvpMatrix, glm::mat4 mvMatrix, glm::mat4 m_matrix,  glm::vec3 lightPos);
+	void draw(glm::mat4 mvpMatrix, glm::mat4 mvMatrix, glm::vec3 lightPos);
 	~NormalMapModel();
 };
 
+struct KeyFuncs {
+	size_t operator()(const glm::vec3& k)const {
+		auto x = hash<float>()(k.x);
+		auto y = hash<float>()(k.y > 0 ? k.y + 1.f : k.y - 1.f);
+		auto z = hash<float>()(k.z > 0 ? k.z + 2.f : k.z - 2.f);
+		return x ^ y ^ z;
+	}
 
+	bool operator()(const glm::vec3& a, const glm::vec3& b)const {
+		return a.x == b.x && a.y == b.y && a.z == b.z;
+	}
+};
 #endif //MEDIEFIGHT_NORMALMAP_H
