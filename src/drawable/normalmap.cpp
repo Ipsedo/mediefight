@@ -66,10 +66,9 @@ void NormalMapModel::bind() {
 	mPositionHandle = (GLuint) glGetAttribLocation(mProgram, "a_Position");
 	mTextCoordHandle = (GLuint) glGetAttribLocation(mProgram, "a_TexCoord");
 	mNormalHandle = (GLuint) glGetAttribLocation(mProgram, "a_Normal");
-	mTangentHandle = (GLuint) glGetAttribLocation(mProgram, "a_Tangent");
-	mBiTangentHandle = (GLuint) glGetAttribLocation(mProgram, "a_BiTangent");
 
 	mLightPosHandle = (GLuint) glGetUniformLocation(mProgram, "u_LightPos");
+	mCamPosHandle = (GLuint) glGetUniformLocation(mProgram, "u_cam_pos");
 
 	mDistanceCoefHandle = (GLuint) glGetUniformLocation(mProgram, "u_distance_coef");
 	mLightCoefHandle = (GLuint) glGetUniformLocation(mProgram, "u_light_coef");
@@ -78,7 +77,7 @@ void NormalMapModel::bind() {
 	mNormalMapHandle = (GLuint) glGetUniformLocation(mProgram, "u_normalMap");
 }
 
-void NormalMapModel::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::vec3 lightPos) {
+void NormalMapModel::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::vec3 lightPos, glm::vec3 camPos) {
 	glUseProgram(mProgram);
 
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
@@ -90,17 +89,9 @@ void NormalMapModel::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::vec3 l
 	glVertexAttribPointer(mNormalHandle, NORMAL_SIZE, GL_FLOAT, GL_FALSE,
 						  STRIDE, (char *)NULL + POSITION_SIZE *  BYTES_PER_FLOAT);
 
-	glEnableVertexAttribArray(mTangentHandle);
-	glVertexAttribPointer(mTangentHandle, TANGENT_SIZE, GL_FLOAT, GL_FALSE,
-						  STRIDE, (char *)NULL + (POSITION_SIZE + NORMAL_SIZE) *  BYTES_PER_FLOAT);
-
-	glEnableVertexAttribArray(mBiTangentHandle);
-	glVertexAttribPointer(mBiTangentHandle, BITANGENT_SIZE, GL_FLOAT, GL_FALSE,
-						  STRIDE, (char *)NULL + (POSITION_SIZE + NORMAL_SIZE + TANGENT_SIZE) *  BYTES_PER_FLOAT);
-
 	glEnableVertexAttribArray(mTextCoordHandle);
 	glVertexAttribPointer(mTextCoordHandle, TEX_COORD_SIZE, GL_FLOAT, GL_FALSE,
-						  STRIDE, (char *)NULL + (POSITION_SIZE + NORMAL_SIZE + TANGENT_SIZE + BITANGENT_SIZE) *  BYTES_PER_FLOAT);
+						  STRIDE, (char *)NULL + (POSITION_SIZE + NORMAL_SIZE) *  BYTES_PER_FLOAT);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -109,6 +100,8 @@ void NormalMapModel::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::vec3 l
 	glUniformMatrix4fv(mMVPMatrixHandle, 1, GL_FALSE, glm::value_ptr(mvp_matrix));
 
 	glUniform3fv(mLightPosHandle, 1, glm::value_ptr(lightPos));
+
+	glUniform3fv(mCamPosHandle, 1, glm::value_ptr(camPos));
 
 	glUniform1f(mDistanceCoefHandle, 0.f);
 
@@ -202,119 +195,18 @@ vector<float> NormalMapModel::parseObj(string objFileName) {
 
 	in.close();
 
-	vector<glm::vec3> tangents;
-	vector<glm::vec3> bitangents;
-	unordered_map<glm::vec3, tuple<glm::vec3, glm::vec3>, KeyFuncs, KeyFuncs> map;
-	for (int i = 0; i < vertex_draw_order.size(); i+=3) {
-
-		// Normal
-		glm::vec3 n;
-		n.x = normal_list[(normal_draw_order[i] - i) * 3];
-		n.y = normal_list[(normal_draw_order[i] - i) * 3 + 1];
-		n.z = normal_list[(normal_draw_order[i] - i) * 3 + 2];
-		if (map.find(n) != map.end()) {
-			auto t = map[n];
-			glm::vec3 tangent = get<0>(t);
-			glm::vec3 bitangent = get<1>(t);
-
-			tangents.push_back(tangent);
-			tangents.push_back(tangent);
-			tangents.push_back(tangent);
-
-			bitangents.push_back(bitangent);
-			bitangents.push_back(bitangent);
-			bitangents.push_back(bitangent);
-		}
-		glm::vec3 v0;
-		v0.x = vertex_list[(vertex_draw_order[i] - 1) * 3];
-		v0.y = vertex_list[(vertex_draw_order[i] - 1) * 3 + 1];
-		v0.z = vertex_list[(vertex_draw_order[i] - 1) * 3 + 2];
-
-		glm::vec3 v1;
-		v1.x = vertex_list[(vertex_draw_order[i + 1] - 1) * 3];
-		v1.y = vertex_list[(vertex_draw_order[i + 1] - 1) * 3 + 1];
-		v1.z = vertex_list[(vertex_draw_order[i + 1] - 1) * 3 + 2];
-
-		glm::vec3 v2;
-		v2.x = vertex_list[(vertex_draw_order[i + 2] - 1) * 3];
-		v2.y = vertex_list[(vertex_draw_order[i + 2] - 1) * 3 + 1];
-		v2.z = vertex_list[(vertex_draw_order[i + 2] - 1) * 3 + 2];
-
-		// UVs
-		glm::vec2 uv0;
-		uv0.x = uv_list[(uv_draw_order[i] - 1) * 2];
-		uv0.y = uv_list[(uv_draw_order[i] - 1) * 2 + 1];
-
-		glm::vec2 uv1;
-		uv1.x = uv_list[(uv_draw_order[i + 1] - 1) * 2];
-		uv1.y = uv_list[(uv_draw_order[i + 1] - 1) * 2 + 1];
-
-		glm::vec2 uv2;
-		uv2.x = uv_list[(uv_draw_order[i + 2] - 1) * 2];
-		uv2.y = uv_list[(uv_draw_order[i + 2] - 1) * 2 + 1];
-
-		// http://www.opengl-tutorial.org/fr/intermediate-tutorials/tutorial-13-normal-mapping/
-		glm::vec3 deltaPos1 = v1-v0;
-		glm::vec3 deltaPos2 = v2-v0;
-
-		// UV delta
-		glm::vec2 deltaUV1 = uv1-uv0;
-		glm::vec2 deltaUV2 = uv2-uv0;
-
-		float r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x);
-		glm::vec3 tangent = (deltaPos1 * deltaUV2.y   - deltaPos2 * deltaUV1.y)*r;
-		glm::vec3 bitangent = (deltaPos2 * deltaUV1.x   - deltaPos1 * deltaUV2.x)*r;
-
-		tangents.push_back(tangent);
-		tangents.push_back(tangent);
-		tangents.push_back(tangent);
-
-		bitangents.push_back(bitangent);
-		bitangents.push_back(bitangent);
-		bitangents.push_back(bitangent);
-
-		map[n] = tuple<glm::vec3, glm::vec3>(tangent, bitangent);
-	}
-
-
 	vector<float> packedData;
-
 	for (int i = 0; i < vertex_draw_order.size(); i++) {
-		// Vertices
-		glm::vec3 v0;
-		v0.x = vertex_list[(vertex_draw_order[i] - 1) * 3];
-		v0.y = vertex_list[(vertex_draw_order[i] - 1) * 3 + 1];
-		v0.z = vertex_list[(vertex_draw_order[i] - 1) * 3 + 2];
+		packedData.push_back(vertex_list[(vertex_draw_order[i] - 1) * 3]);
+		packedData.push_back(vertex_list[(vertex_draw_order[i] - 1) * 3 + 1]);
+		packedData.push_back(vertex_list[(vertex_draw_order[i] - 1) * 3 + 2]);
 
-		// Normal
-		glm::vec3 n0;
-		n0.x = normal_list[(normal_draw_order[i] - 1) * 3];
-		n0.y = normal_list[(normal_draw_order[i] - 1) * 3 + 1];
-		n0.z = normal_list[(normal_draw_order[i] - 1) * 3 + 2];
+		packedData.push_back(normal_list[(normal_draw_order[i] - 1) * 3]);
+		packedData.push_back(normal_list[(normal_draw_order[i] - 1) * 3 + 1]);
+		packedData.push_back(normal_list[(normal_draw_order[i] - 1) * 3 + 2]);
 
-		// UVs
-		glm::vec2 uv0;
-		uv0.x = uv_list[(uv_draw_order[i] - 1) * 2];
-		uv0.y = uv_list[(uv_draw_order[i] - 1) * 2 + 1];
-
-		packedData.push_back(v0.x);
-		packedData.push_back(v0.y);
-		packedData.push_back(v0.z);
-
-		packedData.push_back(n0.x);
-		packedData.push_back(n0.y);
-		packedData.push_back(n0.z);
-
-		packedData.push_back(tangents[i].x);
-		packedData.push_back(tangents[i].y);
-		packedData.push_back(tangents[i].z);
-
-		packedData.push_back(bitangents[i].x);
-		packedData.push_back(bitangents[i].y);
-		packedData.push_back(bitangents[i].z);
-
-		packedData.push_back(uv0.x);
-		packedData.push_back(uv0.y);
+		packedData.push_back(uv_list[(uv_draw_order[i] - 1) * 2]);
+		packedData.push_back(uv_list[(uv_draw_order[i] - 1) * 2 + 1]);
 
 		nbVertex++;
 	}
