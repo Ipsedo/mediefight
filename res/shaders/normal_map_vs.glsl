@@ -1,7 +1,6 @@
 #version 150
 uniform mat4 u_MVPMatrix;
 uniform mat4 u_MVMatrix;
-uniform mat4 u_MMatrix;
 
 attribute vec3 a_Position;
 attribute vec3 a_Normal;
@@ -18,9 +17,9 @@ void main() {
 
     v_TexCoord = a_TexCoord;
 
-    vec3 T = normalize(vec3(u_MMatrix * vec4(a_Tangent,   0.0)));
-    vec3 B = normalize(vec3(u_MMatrix * vec4(a_BiTangent, 0.0)));
-    vec3 N = normalize(vec3(u_MMatrix * vec4(a_Normal,    0.0)));
+    vec3 T = normalize(vec3(u_MVMatrix * vec4(a_Tangent,   0.0)));
+    vec3 B = normalize(vec3(u_MVMatrix * vec4(a_BiTangent, 0.0)));
+    vec3 N = normalize(vec3(u_MVMatrix * vec4(a_Normal,    0.0)));
     v_TBN = transpose(mat3(T, B, N));
 
     gl_Position = u_MVPMatrix * vec4(a_Position, 1.0);
