@@ -55,8 +55,8 @@ ModelVBO::ModelVBO(string model_file_name, glm::vec4 color) {
 
 void ModelVBO::init() {
     mProgram = glCreateProgram();
-    GLuint vertexShader = loadShader(GL_VERTEX_SHADER, getResFolder() + "/shaders/diffuse_vs.glsl");
-    GLuint fragmentShader = loadShader(GL_FRAGMENT_SHADER, getResFolder() + "/shaders/diffuse_fs.glsl");
+    GLuint vertexShader = loadShader(GL_VERTEX_SHADER, getShaderFolder() + "/diffuse_vs.glsl");
+    GLuint fragmentShader = loadShader(GL_FRAGMENT_SHADER, getShaderFolder() + "/diffuse_fs.glsl");
     glAttachShader(mProgram, vertexShader);
     glAttachShader(mProgram, fragmentShader);
     glLinkProgram(mProgram);

@@ -52,8 +52,8 @@ void NormalMapModel::initTex(string textureFile, string normalsFile) {
 
 void NormalMapModel::initPrgm() {
 	mProgram = glCreateProgram();
-	GLuint vs = loadShader(GL_VERTEX_SHADER, getResFolder() + "/shaders/normal_map_vs.glsl");
-	GLuint fs = loadShader(GL_FRAGMENT_SHADER, getResFolder() + "/shaders/normal_map_fs.glsl");
+	GLuint vs = loadShader(GL_VERTEX_SHADER, getShaderFolder() + "/normal_map_vs.glsl");
+	GLuint fs = loadShader(GL_FRAGMENT_SHADER, getShaderFolder() + "/normal_map_fs.glsl");
 	glAttachShader(mProgram, vs);
 	glAttachShader(mProgram, fs);
 	glLinkProgram(mProgram);

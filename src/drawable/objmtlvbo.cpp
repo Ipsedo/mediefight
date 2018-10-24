@@ -18,8 +18,8 @@ using namespace std;
 
 void ObjMtlVBO::init() {
     mProgram = glCreateProgram();
-    GLuint vertexShader = loadShader(GL_VERTEX_SHADER, getResFolder() + "/shaders/specular_vs.glsl");
-    GLuint fragmentShader = loadShader(GL_FRAGMENT_SHADER, getResFolder() + "/shaders/specular_fs.glsl");
+    GLuint vertexShader = loadShader(GL_VERTEX_SHADER, getShaderFolder() + "/specular_vs.glsl");
+    GLuint fragmentShader = loadShader(GL_FRAGMENT_SHADER, getShaderFolder() + "/specular_fs.glsl");
     glAttachShader(mProgram, vertexShader);
     glAttachShader(mProgram, fragmentShader);
     glLinkProgram(mProgram);
