@@ -9,4 +9,6 @@
 
 std::string getResFolder();
 
+std::string getShaderFolder();
+
 #endif //MEDIEFIGHT_RES_H

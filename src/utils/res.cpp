@@ -27,3 +27,22 @@ string getResFolder() {
 
     return res_path;
 }
+
+std::string getShaderFolder() {
+    using namespace std;
+    string this_file = __FILE__;
+    vector<string> splittedPath = split(this_file, '/');
+
+    while (splittedPath.back() != "mediefight") {
+        splittedPath.pop_back();
+    }
+
+    string res_path;
+    for (auto &elt : splittedPath) {
+        res_path += "/" + elt;
+    }
+
+    res_path += "/shaders";
+
+    return res_path;
+}
