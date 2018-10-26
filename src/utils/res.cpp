@@ -10,39 +10,39 @@
 using namespace std;
 
 string getResFolder() {
-    using namespace std;
-    string this_file = __FILE__;
-    vector<string> splittedPath = split(this_file, '/');
+	using namespace std;
+	string this_file = __FILE__;
+	vector<string> splittedPath = split(this_file, '/');
 
-    while (splittedPath.back() != "mediefight") {
-        splittedPath.pop_back();
-    }
+	while (splittedPath.back() != "mediefight") {
+		splittedPath.pop_back();
+	}
 
-    string res_path;
-    for (auto& elt : splittedPath) {
-        res_path += "/" + elt;
-    }
+	string res_path;
+	for (auto &elt : splittedPath) {
+		res_path += "/" + elt;
+	}
 
-    res_path += "/res";
+	res_path += "/res";
 
-    return res_path;
+	return res_path;
 }
 
 std::string getShaderFolder() {
-    using namespace std;
-    string this_file = __FILE__;
-    vector<string> splittedPath = split(this_file, '/');
+	using namespace std;
+	string this_file = __FILE__;
+	vector<string> splittedPath = split(this_file, '/');
 
-    while (splittedPath.back() != "mediefight") {
-        splittedPath.pop_back();
-    }
+	while (splittedPath.back() != "mediefight") {
+		splittedPath.pop_back();
+	}
 
-    string res_path;
-    for (auto &elt : splittedPath) {
-        res_path += "/" + elt;
-    }
+	string res_path;
+	for (auto &elt : splittedPath) {
+		res_path += "/" + elt;
+	}
 
-    res_path += "/shaders";
+	res_path += "/shaders";
 
-    return res_path;
+	return res_path;
 }

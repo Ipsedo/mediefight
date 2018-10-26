@@ -6,7 +6,6 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include <fstream>
-#include <unordered_map>
 #include "normalmap.h"
 #include "../utils/graphics/shader.h"
 #include "../utils/res.h"
@@ -87,11 +86,11 @@ void NormalMapModel::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::vec3 l
 
 	glEnableVertexAttribArray(mNormalHandle);
 	glVertexAttribPointer(mNormalHandle, NORMAL_SIZE, GL_FLOAT, GL_FALSE,
-						  STRIDE, (char *)NULL + POSITION_SIZE *  BYTES_PER_FLOAT);
+						  STRIDE, (char *) NULL + POSITION_SIZE * BYTES_PER_FLOAT);
 
 	glEnableVertexAttribArray(mTextCoordHandle);
 	glVertexAttribPointer(mTextCoordHandle, TEX_COORD_SIZE, GL_FLOAT, GL_FALSE,
-						  STRIDE, (char *)NULL + (POSITION_SIZE + NORMAL_SIZE) *  BYTES_PER_FLOAT);
+						  STRIDE, (char *) NULL + (POSITION_SIZE + NORMAL_SIZE) * BYTES_PER_FLOAT);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -125,7 +124,7 @@ void NormalMapModel::draw(glm::mat4 mvp_matrix, glm::mat4 mv_matrix, glm::vec3 l
 }
 
 void NormalMapModel::genBuffer(string objFileName) {
-	 vector<float> packedData = parseObj(move(objFileName));
+	vector<float> packedData = parseObj(move(objFileName));
 
 	glGenBuffers(1, &buffer);
 
@@ -156,7 +155,7 @@ vector<float> NormalMapModel::parseObj(string objFileName) {
 	while (getline(in, str)) {
 		//cout << str << endl;
 		vector<string> splitted_line = split(str, ' ');
-		if(!splitted_line.empty()) {
+		if (!splitted_line.empty()) {
 			if (splitted_line[0] == "vn") {
 				normal_list.push_back(stof(splitted_line[1]));
 				normal_list.push_back(stof(splitted_line[2]));

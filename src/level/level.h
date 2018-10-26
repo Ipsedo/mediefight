@@ -10,11 +10,12 @@
 class Level {
 
 public:
-    void render(glm::mat4 projectionMatrix,
-                glm::mat4 viewMatrix,
-                glm::vec3 lightPosInEyeSpace,
-                glm::vec3 cameraPosition);
-    void update();
+	void render(glm::mat4 projectionMatrix,
+				glm::mat4 viewMatrix,
+				glm::vec3 lightPosInEyeSpace,
+				glm::vec3 cameraPosition);
+
+	void update();
 };
 
 #endif //MEDIEFIGHT_LEVEL_H
